@@ -5,7 +5,7 @@
 
         $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
         if(mysqli_errno($connection)) {
-            die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>\n</body>\n</html>\n"); //Error message if connection failed
+            die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
         }
 
         //Number of unique sets
