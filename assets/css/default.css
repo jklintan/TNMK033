@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+}
+
+h1, h2, h3, p, a {
+    font-family: sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #999;
+    transition: 200ms;
+}
+
+a:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+div {
+    display: flex;
+}
+
+nav {
+    display: flex;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    justify-content: flex-end;
+}
+
+nav a {
+    padding: 10px;
+}
+
+input {
+    padding: 10px;
+    border-radius: 3px;
+    border: 0;
+    background-color: #fff;
+    text-align: left;
+}

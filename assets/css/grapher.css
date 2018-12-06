@@ -1,0 +1,8 @@
+.grapher {
+    flex-direction: column;
+    background-color: red;
+}
+
+body {
+    background-color: red !important;
+}
