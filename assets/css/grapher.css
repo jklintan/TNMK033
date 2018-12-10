@@ -1,8 +1,40 @@
 .grapher {
     flex-direction: column;
-    background-color: red;
+    background-color: #fff;
+    position: relative;
 }
 
-body {
-    background-color: red !important;
+.grapher.numberSlider {
+    max-width: 300px;
+    overflow: hidden;
+}
+
+.grapher.numberSlider h2 {
+    text-align: center;
+}
+
+.grapher.numberSlider a {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.grapher.numberSlider a.left {
+    left: 0;
+}
+
+.grapher.numberSlider a.right {
+    right: 0;
+}
+
+.grapher.numberSlider div.slider {
+    transition: 200ms;
+}
+
+/* Data entry */
+.grapher.numberSlider div div {
+    justify-content: center;
+    flex: 1;
 }

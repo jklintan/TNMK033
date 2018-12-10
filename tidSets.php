@@ -15,18 +15,9 @@
         $setsByTime = [];
 
         //assign values from database into an array
-        while($row = mysqli_fetch_row($query)){
-            $setsByTime[] = $row;
+        while($assoc = mysqli_fetch_assoc($query)){
+            $setsByTime[] = $assoc;
         }
-
-        //change the keys for the array for rendering in javascript
-        for($i = 0; $i < $length = count($setsByTime); $i++) {
-            $setsByTime[$i]['Year'] = $setsByTime[$i][0];
-            $setsByTime[$i]['Data'] = $setsByTime[$i][1];
-            unset($setsByTime[$i][1]);
-            unset($setsByTime[$i][0]);
-        }
-
 
         //send to js for rendering
         $setsByTimeString = json_encode($setsByTime);
@@ -39,5 +30,6 @@
         echo '<pre>';
         print_r($setsByTime);
         echo '</pre>';
+
     ?>
 </html>

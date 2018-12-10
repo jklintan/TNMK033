@@ -11,16 +11,33 @@ const createGraph = (type, jsondata, targetSelector) => {
     // if (type === 'histogram') {
     //     graph = createHistogram(data)
     // }
-    const target = document.querySelector('body')
-    target.appendChild(graph)
+    if (graph) {
+        const target = document.querySelector('body')
+        target.appendChild(graph)
+    }
+}
+
+const numberSliderClick = (element, goTo) => {
+    const slider = element.querySelector('div')
+    const children = [].slice.call(element.children)
+    const pos = parseInt(slider.dataset.slider) + goTo
+    console.log(pos)
+    slider.style.transform = 'translateX(-' + pos * (100 / children.length) + '%)'
+    slider.dataset.slider = pos
 }
 
 const createNumberSlider = (data) => {
     const parent = document.createElement('div')
     const header = document.createElement('h2')
     const slider = document.createElement('div')
+    const arrowRight = document.createElement('a')
+    const arrowLeft = document.createElement('a')
+
     parent.classList.add('grapher', 'numberSlider')
     header.textContent = data[0].title
+    slider.style.width = data.length * 100 + '%'
+    slider.classList.add('slider')
+    slider.dataset.slider = 0 // The data to show
     data.forEach(object => {
         const entry = document.createElement('div')
         const p = document.createElement('p')
@@ -28,7 +45,17 @@ const createNumberSlider = (data) => {
         entry.appendChild(p)
         slider.appendChild(entry)
     })
+
+    arrowRight.classList.add('right')
+    arrowRight.addEventListener('click', () => numberSliderClick(parent, 1))
+    arrowRight.textContent = '▶'
+    arrowLeft.classList.add('left')
+    arrowLeft.addEventListener('click', () => numberSliderClick(parent, -1))
+    arrowLeft.textContent = '◀'
+
     parent.appendChild(header)
+    parent.appendChild(arrowLeft)
+    parent.appendChild(arrowRight)
     parent.appendChild(slider)
     return parent
 }
