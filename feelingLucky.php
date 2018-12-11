@@ -4,7 +4,7 @@
         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
 
         if(!$connection){
-            die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>\n</body>\n</html>\n"); //Error message if connection failed
+            die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>\n</body>\n</html>\n"); //error message if connection failed
         }
         
         //query database for a random part

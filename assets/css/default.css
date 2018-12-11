@@ -2,6 +2,14 @@ body {
     margin: 0;
 }
 
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
 h1, h2, h3, p, a {
     font-family: sans-serif;
 }
