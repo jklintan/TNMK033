@@ -2,25 +2,25 @@
 /** @param {string} jsondata */
 /** @param {string} targetSelector */
 const createGraph = (type, jsondata, targetSelector) => {
-  const data = JSON.parse(jsondata)
-  console.log(data)
-  // if (data[0].number) {
-  //     data.forEach(entry => {
-  //         entry.number = parseInt(entry.number)
-  //     })
-  // }
-  console.log(data)
-  let graph
+  // console.log(JSON.parse(jsondata))
+  const graph = JSON.parse(jsondata)
+  console.log(graph)
+  if (graph.data[0].number) {
+    graph.data.forEach(entry => {
+          entry.number = parseInt(entry.number)
+      })
+  }
+  let graphElement
   if (type === 'numberSlider') {
-    graph = createNumberSlider(data)
+    graphElement = createNumberSlider(graph)
   }
   if (type === 'histogram') {
-    graph = createHistogram(data)
+    graphElement = createHistogram(graph)
   }
-  if (graph) {
+  if (graphElement) {
     const target = document.querySelector(targetSelector)
     if (target) {
-      target.appendChild(graph)
+      target.appendChild(graphElement)
     } else {
       console.log('No target html object found')
     }
@@ -96,9 +96,9 @@ const createNumberSlider = (sliderData) => {
 }
 
 const findTallestData = (histogramData) => {
-  if (histogramData[0].number) {
-    let tallest = histogramData[0].number
-    histogramData.forEach(data => {
+  if (histogramData.data[0].number) {
+    let tallest = histogramData.data[0].number
+    histogramData.data.forEach(data => {
       tallest = data.number > tallest ? data.number : tallest
     })
     return tallest
@@ -107,10 +107,27 @@ const findTallestData = (histogramData) => {
   return false
 }
 
+/**
+ * @param {dataobj[]} histogramData
+ * @typedef {Object}  dataobj              - The data object
+ * @property {Number}  dataobj.text    - The text describing the part
+ * @property {Number}  dataobj.number    - The number to diplay
+ */
 const createBar = (barData, tallest) => {
   const bar = document.createElement('div')
-  bar.style.height = (barData.number / tallest) * 100 + '%'
+  const info = document.createElement('div')
+  const number = document.createElement('p')
+  const text = document.createElement('p')
+  const height = (barData.number / tallest) * 100
+  bar.style.height = height + '%'
+  // if (height > )
   bar.classList.add('bar')
+  info.classList.add('barInfo')
+  text.textContent = barData.text
+  number.textContent = barData.number
+  info.appendChild(text)
+  info.appendChild(number)
+  bar.appendChild(info)
   return bar
 }
 
@@ -122,11 +139,16 @@ const createBar = (barData, tallest) => {
  */
 const createHistogram = (histogramData) => {
   const tallest = findTallestData(histogramData)
+  // console.log(tallest)
   const parent = document.createElement('div')
   parent.classList.add('grapher', 'histogram')
 
-  histogramData.forEach(entry => {
+  let delay = 0
+  const step = 1000 / histogramData.length
+  histogramData.data.forEach(entry => {
     const bar = createBar(entry, tallest)
+    bar.style.animationDelay = delay + 'ms'
+    delay += step
     parent.appendChild(bar)
   })
   document.querySelector('body').appendChild(parent)

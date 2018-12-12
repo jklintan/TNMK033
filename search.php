@@ -1,4 +1,6 @@
-<html>
+<?php
+    include 'head.php';
+?>
 <?php
 
 $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database

@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    background-color: #393e41;
 }
 
 .row {
@@ -11,7 +12,8 @@ body {
 }
 
 h1, h2, h3, p, a {
-    font-family: sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
 }
 
 a {
@@ -28,7 +30,7 @@ div {
     display: flex;
 }
 
-nav {
+header {
     display: flex;
     position: absolute;
     top: 0;
@@ -36,11 +38,13 @@ nav {
     justify-content: flex-end;
 }
 
-nav a {
+header a {
     padding: 10px;
+    color: #fdfffc;
 }
 
 input {
+    margin: 0;
     padding: 10px;
     border-radius: 3px;
     border: 0;

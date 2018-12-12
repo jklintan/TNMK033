@@ -79,8 +79,60 @@
   border-top: 2px solid rgba(255, 255, 255, 0.4);
   transition: 200ms;
   margin: 0 5px;
+  animation: rise 500ms;
+  transform: scale(1, 0);
+  animation-fill-mode: forwards;
+}
+
+@keyframes rise {
+  from {
+    transform: scale(1, 0);
+    transform-origin: bottom;
+  }
+  to {
+    transform: scale(1, 1);
+    transform-origin: bottom;
+  }
 }
 
 .grapher.histogram .bar:hover {
   background-color: rgba(255, 255, 255, 0.4);
+}
+
+.grapher.histogram .bar div.barInfo {
+  white-space: nowrap;
+  flex-direction: column;
+  pointer-events: none;
+  opacity: 0;
+  position: absolute;
+  padding: 10px;
+  left: 30px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: none;
+  border: 1px solid #fff;
+  transition: 0.2s;
+  transition: 200ms;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2)
+}
+
+.grapher.histogram .bar div.barInfo * {
+  margin: 0;
+}
+
+.grapher.histogram .bar:hover div.barInfo {
+  opacity: 1;
+  position: fixed;
+}
+
+.grapher.histogram .bar div.barInfo:after {
+  content:'';
+  position: absolute;
+  top: calc(50% - 5px);
+  right: 100%;
+  width: 0;
+  height: 0;
+  border-right: solid 5px #fff;
+  border-bottom: solid 5px transparent;
+  border-top: solid 5px transparent;
 }

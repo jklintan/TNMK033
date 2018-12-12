@@ -11,16 +11,31 @@
         $orderedSets = "SELECT Year, COUNT(*) FROM sets GROUP BY Year ORDER BY Year ASC";
         $query = mysqli_query($connection, $orderedSets);
 
+
+
         //array for storing values fetched from database
         $setsByTime = [];
 
         //assign values from database into an array
-        while($assoc = mysqli_fetch_assoc($query)){
-            $setsByTime[] = $assoc;
+        while($row = mysqli_fetch_row($query)){
+            $setsByTime[] = $row;
         }
 
+        //change keys for js rendering
+        for($i = 0; $i < count($setsByTime); $i++){
+            $setsByTime[$i]['text'] = $setsByTime[$i][0];
+            $setsByTime[$i]['number'] = $setsByTime[$i][1];
+            unset($setsByTime[$i][0]);
+            unset($setsByTime[$i][1]);
+        }
+        
+        //array for storing title and data, for rendering
+        $legoData = [];
+        $legoData['title'] = "Sets over time";
+        $legoData['data'] = $setsByTime;
+
         //send to js for rendering
-        $setsByTimeString = json_encode($setsByTime);
+        $setsByTimeString = json_encode($legoData);
         echo "<script type='text/javascript'>",
         "createGraph('histogram', '$setsByTimeString', '.statistics');",
         "</script>"
@@ -28,7 +43,7 @@
 
         //test junk
         echo '<pre>';
-        print_r($setsByTime);
+        print_r($legoData);
         echo '</pre>';
 
     ?>
