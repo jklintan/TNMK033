@@ -39,6 +39,11 @@
     min-width: 400px;
 }
 
+.toplists .columnitem img{
+    height: 100% !important;
+    object-fit: cover;
+}
+
 
 /*Text*/
  

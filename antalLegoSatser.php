@@ -34,14 +34,14 @@
             echo($uNumbOfSets[0]);
 
             // Number of pieces in total
-            $legoID = "SELECT COUNT(inventory.ItemID) FROM inventory";
+            $legoID = "SELECT SUM(inventory.Quantity) FROM inventory WHERE ItemtypeID='P'";
             $legoQuery = mysqli_query($connection, $legoID);
             $numbOfPieces = mysqli_fetch_array($legoQuery);
             echo("Unika antalet legobitar: ");
             echo($numbOfPieces[0]);
 
             // Number of unique pieces
-            $uLegoID = "SELECT COUNT(DISTINCT inventory.ItemID) FROM inventory";
+            $uLegoID = "SELECT COUNT(DISTINCT inventory.ItemID) FROM inventory WHERE ItemtypeID='P'";
             $uLegoQuery = mysqli_query($connection, $uLegoID);
             $uNumbOfPieces = mysqli_fetch_array($uLegoQuery);
             echo("Unika antalet legobitar: ");

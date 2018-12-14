@@ -22,8 +22,8 @@
 
         <div class="row">
             <div class="column">
-                    <div class="columnitem">
-                    <h3>Lego sets with most pieces! </h3>
+                <div class="columnitem">
+                    <h3>Lego set med flest bitar! </h3>
                     <?php
                         //The 10 sets with most pieces in total 
                         $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
@@ -53,6 +53,65 @@
                         mysqli_close($connection);
                     ?>
                 </div>
+
+                 <div class="columnitem">
+                    <h3>De 3 största legoseten </h3>
+                    <?php
+                        //The 10 sets with most pieces in total 
+                        $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
+                        if(mysqli_error($connection)) {
+                            die("<p>MySQL error:</p><p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
+                        }
+
+                        $topPiece = "SELECT DISTINCT(SetID), SUM(inventory.Quantity) AS totalpieces FROM inventory GROUP BY SetID ORDER BY totalpieces DESC LIMIT 3";
+                        $contents = mysqli_query($connection, $topPiece);
+
+                        if(mysqli_num_rows($contents) == 0) {
+                            print("<p>Error in reading of data...</p>\n");
+                        } else {
+                            $i = 0;
+                            while($row = mysqli_fetch_array($contents)) {
+                                $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                                $ItemID = $row[0];
+                                $pieces = $row[1];
+                                $getSetName = "SELECT sets.Setname FROM sets, inventory WHERE sets.SetID='$ItemID'";
+                                $fetch = mysqli_query($connection, $getSetName);
+                                $name = mysqli_fetch_array($fetch);
+                                $i++;
+                                print("<p><b> $i : $name[0] </b></p> <p> Antal bitar: $pieces </p>");
+                                
+                            }
+                        }
+                        mysqli_close($connection);
+                    ?>
+                </div>
+
+                <div class="columnitem">
+                    <h3>Det äldsta setet </h3>
+                    <?php
+                        $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
+
+                        if(!$connection){
+                            die("<p>MySQL error:</p> <p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
+                        }
+                        
+                        //query database for number how many sets were released during a year
+                        $orderedSets = "SELECT Setname, Year, SetID FROM sets ORDER BY Year ASC LIMIT 1";
+                        $query = mysqli_query($connection, $orderedSets);
+
+                        while($assoc = mysqli_fetch_array($query)){
+                            $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                            $ItemID = $assoc[2];
+                            $year = $assoc[1];
+                                
+                            $filename = "SL/$ItemID.jpg";
+                            print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
+                            print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
+                            $i++;
+                        }
+                    ?>
+                </div>
+
             </div>
 
             <div class="column">
@@ -62,7 +121,7 @@
                         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
 
                         if(!$connection){
-                            die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>\n</body>\n</html>\n"); //Error message if connection failed
+                            die("<p>MySQL error:</p> <p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
                         }
                         
                         //query database for number how many sets were released during a year
@@ -106,7 +165,7 @@
                 </div>
             
                 <div class="columnitem">
-                    <h3>Den mest populära biten </h3>
+                    <h3>Den vanligaste biten </h3>
                         <?php
                             //The most popular piece
                             $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
@@ -114,7 +173,7 @@
                                 die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
                             }
 
-                            $topPiece = "SELECT COUNT(ItemID) FROM inventory ORDER BY COUNT(ItemID) ASC LIMIT 1";
+                            $topPiece = "SELECT ItemID, SUM(Quantity) AS pieceSum FROM inventory WHERE ItemtypeID='P' GROUP BY ItemID ORDER BY pieceSum DESC LIMIT 1";
                             $content = mysqli_query($connection, $topPiece);
 
                             if(mysqli_num_rows($content) == 0) {
@@ -123,20 +182,95 @@
                                 while($row = mysqli_fetch_array($content)) {
                                     $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
                                     $ItemID = $row[0];
-                                    $getSetName = "SELECT parts.Partname, inventory.ColorID inventory.ItemTypeID, inventory.ColorID FROM parts, inventory WHERE parts.PartID='$ItemID' AND inventory.ItemID = '$ItemID";
+                                    $getSetName = "SELECT parts.Partname, inventory.ColorID FROM parts, inventory WHERE inventory.ItemID='$ItemID' AND inventory.ItemID=parts.PartID AND ItemtypeID='P'";
                                     $fetch = mysqli_query($connection, $getSetName);
                                     $name = mysqli_fetch_array($fetch);
-                                    $ColorID = $name['ColorID'];
-                                    print("$ColorID");
-                                    print("$name[1]");
-                                
-                                    $filename = "P/$ColorID/$ItemID.jpg";
-                                    print(" <b> $name[0] </b> ");
-                                    print("<td><img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/></td>");
+                                    $partname = $name[0];
+                                    $ColorID = $name[1];
+                                    $imagesearch = mysqli_query($connection, "SELECT * FROM images WHERE ItemTypeID='P' AND ItemID='$ItemID' AND ColorID=$ColorID");
+                                    $imageinfo = mysqli_fetch_array($imagesearch);
+                                    if($imageinfo['has_jpg']) { // Use JPG if it exists
+	                                    $filename = "P/$ColorID/$ItemID.jpg";
+                                    } else if($imageinfo['has_gif']) { // Use GIF if JPG is unavailable
+	                                    $filename = "P/$ColorID/$ItemID.gif";
+                                    } else { // If neither format is available, insert a placeholder image
+	                                    $filename = "noimage_small.png";
+                                    }
+                                    print(" <b> $partname </b> Antal: $row[1]");
+                                    print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
                                 }
                             }
                             mysqli_close($connection);
                         ?>
+                </div>
+
+                <div class="columnitem">
+                    <h3>En av de ovanligaste bitarna </h3>
+                        <?php
+                            //The most popular piece
+                            $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
+                            if(mysqli_error($connection)) {
+                                die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
+                            }
+
+                            $topPiece = "SELECT ItemID, SUM(Quantity) AS pieceSum FROM inventory WHERE ItemtypeID='P' GROUP BY ItemID ORDER BY pieceSum ASC LIMIT 1";
+                            $content = mysqli_query($connection, $topPiece);
+
+                            if(mysqli_num_rows($content) == 0) {
+                                print("<p>Error in reading of data...</p>\n");
+                            } else {
+                                while($row = mysqli_fetch_array($content)) {
+                                    $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                                    $ItemID = $row[0];
+                                    $getSetName = "SELECT parts.Partname, inventory.ColorID FROM parts, inventory WHERE inventory.ItemID='$ItemID' AND inventory.ItemID=parts.PartID AND ItemtypeID='P'";
+                                    $fetch = mysqli_query($connection, $getSetName);
+                                    $name = mysqli_fetch_array($fetch);
+                                    $partname = $name[0];
+                                    $ColorID = $name[1];
+                                    $imagesearch = mysqli_query($connection, "SELECT * FROM images WHERE ItemTypeID='P' AND ItemID='$ItemID' AND ColorID=$ColorID");
+                                    $imageinfo = mysqli_fetch_array($imagesearch);
+                                    if($imageinfo['has_jpg']) { // Use JPG if it exists
+	                                    $filename = "P/$ColorID/$ItemID.jpg";
+                                    } else if($imageinfo['has_gif']) { // Use GIF if JPG is unavailable
+	                                    $filename = "P/$ColorID/$ItemID.gif";
+                                    } else { // If neither format is available, insert a placeholder image
+	                                    $filename = "noimage_small.png";
+                                    }
+                                    print(" <b> $partname </b> Antal: $row[1]");
+                                    print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
+                                }
+                            }
+                            mysqli_close($connection);
+                        ?>
+
+                        <button type="button"><a href="http://www.student.itn.liu.se/~joskl841/project/topplista.php">Generera ny ovanlig bit!</a></button>
+
+                </div>
+
+                <div class="columnitem">
+                    <h3>Det nyaste setet </h3>
+                    <?php
+                        $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
+
+                        if(!$connection){
+                            die("<p>MySQL error:</p> <p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
+                        }
+                        
+                        //query database for number how many sets were released during a year
+                        $orderedSets = "SELECT Setname, Year, SetID FROM sets WHERE Year <>'?' ORDER BY Year DESC LIMIT 1";
+                        $query = mysqli_query($connection, $orderedSets);
+
+                        while($assoc = mysqli_fetch_array($query)){
+                            $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                            $ItemID = $assoc[2];
+                            $year = $assoc[1];
+                                
+                            $filename = "SL/$ItemID.jpg";
+                            print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
+                            print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
+                            $i++;
+                        }
+                    ?>
                 </div>
         </div>
 
