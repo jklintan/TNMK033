@@ -18,11 +18,11 @@
     ?>
         
     <div class="container">
-        <h1> Topplists! </h1>
+        <h1> Topplista! </h1>
 
         <div class="row">
             <div class="column">
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Lego set med flest bitar! </h3>
                     <?php
                         //The 10 sets with most pieces in total 
@@ -54,7 +54,7 @@
                     ?>
                 </div>
 
-                 <div class="columnitem">
+                 <div class="columnitem" data-aos="fade-up">
                     <h3>De 3 största legoseten </h3>
                     <?php
                         //The 10 sets with most pieces in total 
@@ -86,7 +86,7 @@
                     ?>
                 </div>
 
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Det äldsta setet </h3>
                     <?php
                         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -115,7 +115,7 @@
             </div>
 
             <div class="column">
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Året med flest legoset! </h3>
                     <?php
                         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -135,7 +135,7 @@
                     ?>
                 </div>
                 
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Fakta från samling: </h3>
                         <?php
                             //Summera antalet satser och bitar som Stefan har i sin samling
@@ -164,7 +164,7 @@
                         ?>
                 </div>
             
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Den vanligaste biten </h3>
                         <?php
                             //The most popular piece
@@ -204,7 +204,7 @@
                         ?>
                 </div>
 
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>En av de ovanligaste bitarna </h3>
                         <?php
                             //The most popular piece
@@ -243,11 +243,11 @@
                             mysqli_close($connection);
                         ?>
 
-                        <button type="button"><a href="http://www.student.itn.liu.se/~joskl841/project/topplista.php">Generera ny ovanlig bit!</a></button>
+                        <button type="button" href="http://www.student.itn.liu.se/~joskl841/project/topplista.php">Generera ny ovanlig bit!</button>
 
                 </div>
 
-                <div class="columnitem">
+                <div class="columnitem" data-aos="fade-up">
                     <h3>Det nyaste setet </h3>
                     <?php
                         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -275,5 +275,8 @@
         </div>
 
     </div>
+    <script>
+        AOS.init();
+    </script>
     </body>
 </html>

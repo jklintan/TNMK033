@@ -33,14 +33,23 @@
             }
         }
 
-        $titleData = "SELECT Setname FROM sets WHERE sets.SetID='10179-1'";
+        //query for set information
+        $titleData = "SELECT Setname, SetID FROM sets WHERE sets.SetID='10179-1'";
         $titleQuery = mysqli_query($connection, $titleData);
         $title = mysqli_fetch_assoc($titleQuery);
 
+        //get set URL
+        $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+        $SetID = $title['SetID'];
+        $filename = "SL/$SetID.jpg";
+        $setURL = "$prefix$filename";
 
+        //assign proper data structure for js rendering
         $legoData = [];
-        $legoData['title'] = $title[Setname];
+        $legoData['title'] = $title['Setname'];
         $legoData['data'] = $things;
+        $legoData['dataType'] = "pieces";
+        $legoData['url'] = $setURL;
 
         $totalsResultString = addslashes(json_encode($legoData));
 

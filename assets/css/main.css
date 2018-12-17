@@ -1,5 +1,6 @@
 body{
     font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
 }
 
 .start {
@@ -20,7 +21,7 @@ body{
 }
 
 .start .centerBox * {
-    text-align: left;
+    text-align: center;
 }
 
 .start .centerBox img {
@@ -31,20 +32,16 @@ body{
     text-align: left;
     margin-right: 4px;
 }
+.start .centerBox #scrollDownArrow {
+    font-size: 32px;
+    margin-top: 50px;
+    color: rgb(97,157,207);
+    animation: bounce 2s infinite;
+}
 
 .stats {
     width: 100vw;
     justify-content: center;
-}
-
-.cardlayout{
-    background-color: rgba(240, 248, 255, 0.1);
-    padding: 15px;
-    border-radius: 5px;
-    margin: 10px;
-}
-.content{
-    align-self: center;
 }
 
 #searchField {
@@ -68,3 +65,20 @@ body{
     background-color: rgba(255, 255, 255, 0.2);
 }
 
+@keyframes bounce {
+    0%   {
+        transform: translateY(0px);
+    }
+    20%  {
+        transform: translateY(7px);
+    }
+    50%  {
+        transform: translateY(0px);
+    }
+    75%  {
+        transform: translateY(7px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

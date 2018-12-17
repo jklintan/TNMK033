@@ -1,0 +1,11 @@
+.faq .row{
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.faq .column{
+    padding: 6px;
+    border-radius: 5px;
+    max-width: 500px;
+}

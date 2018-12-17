@@ -5,7 +5,6 @@
 
 .toplists .container{
     margin-top: 5vh !important;
-    width: 70vw;
     flex-direction: column;
     margin: auto;
 }
@@ -17,31 +16,32 @@
     justify-content: center;
 }
 
-.toplists .container p{
+.toplists button{
+    width: 250px;
+    margin-top: 30px;
 }
 
 .toplists .column{
     flex-direction: column;
-    padding: 40px;
-    max-width: 500px;
-    margin: 15px;
+    padding: 6px;
     border-radius: 5px;
-    min-width: 400px;
+    min-width: 300px;
 }
 
 .toplists .columnitem{
     flex-direction: column;
     background-color: #fff !important;
     padding: 40px;
-    max-width: 500px;
     margin: 15px;
     border-radius: 5px;
-    min-width: 400px;
+    min-width: 300px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
 }
 
 .toplists .columnitem img{
-    height: 100% !important;
-    object-fit: cover;
+    height: auto !important;
+    align-self: center;
+    max-width: 100%;
 }
 
 
@@ -51,6 +51,7 @@
     font-size: 36px;
     color: #fdfffc;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .toplists h3{

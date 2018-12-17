@@ -1,16 +1,23 @@
 .grapher {
     flex-direction: column;
-    background-color: #fff;
+    background: linear-gradient(to bottom, #123250 0%,#235789 100%);
     position: relative;
+    border-radius: 4px;
 }
 
 .grapher.numberSlider {
     max-width: 300px;
     overflow: hidden;
+    
 }
 
 .grapher.numberSlider h2 {
     text-align: center;
+    color:white;
+}
+
+.grapher.numberSlider p{
+  color: white;
 }
 
 .grapher.numberSlider a {
@@ -50,18 +57,22 @@
 .grapher.histogram {
   width: 500px;
   height: 300px;
+  background: linear-gradient(to bottom, #123250 0%,#235789 100%);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.grapher.histogram div.slider {
+  /* display: flex; */
+  padding: 20px;
   flex-direction: row;
   align-items: flex-end;
-  background: linear-gradient(to bottom, #123250 0%,#235789 100%);
-  padding: 20px;
+  height: 100%;
   overflow-x: scroll;
-  border-radius: 5px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
-  margin: 50px;
 }
 
 .grapher.histogram:after {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;
@@ -73,10 +84,18 @@
   pointer-events: none;
 }
 
+.grapher.histogram h2 {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  color: #fff;
+}
+
 .grapher.histogram .bar {
   min-width: 20px;
   background-color: rgba(255, 255, 255, 0.2);
-  border-top: 2px solid rgba(255, 255, 255, 0.4);
+  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%,rgba(255, 255, 255, 0.2) 100%); */
+  /* border-top: 2px solid rgba(255, 255, 255, 0.4); */
   transition: 200ms;
   margin: 0 5px;
   animation: rise 500ms;
@@ -99,32 +118,42 @@
   background-color: rgba(255, 255, 255, 0.4);
 }
 
+/* Info box */
 .grapher.histogram .bar div.barInfo {
+  position: fixed;
   white-space: nowrap;
   flex-direction: column;
   pointer-events: none;
   opacity: 0;
-  position: absolute;
   padding: 10px;
   left: 30px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%,rgba(255, 255, 255, 0.05) 100%);
   color: #fff;
   box-shadow: none;
-  border: 1px solid #fff;
+  border-left: 2px solid #fff;
   transition: 0.2s;
   transition: 200ms;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2)
 }
 
+/* Info box top view */
+.grapher.histogram .bar.top div.barInfo {
+  left: 0;
+  top: -70px;
+  border-left: 0 solid #fff;
+  border-bottom: 2px solid #fff;}
+
+/* Info box text */
 .grapher.histogram .bar div.barInfo * {
   margin: 0;
 }
 
+/* Info box on hover */
 .grapher.histogram .bar:hover div.barInfo {
   opacity: 1;
-  position: fixed;
 }
 
+/* Info box arrow */
 .grapher.histogram .bar div.barInfo:after {
   content:'';
   position: absolute;
@@ -135,4 +164,14 @@
   border-right: solid 5px #fff;
   border-bottom: solid 5px transparent;
   border-top: solid 5px transparent;
+}
+
+/* Info box arrow up */
+.grapher.histogram .bar.top div.barInfo:after {
+  /* top: calc(50% - 5px); */
+  top: 100%;
+  left: 3px;
+  border-top: solid 5px #fff;
+  border-left: solid 5px transparent;
+  border-right: solid 5px transparent;
 }

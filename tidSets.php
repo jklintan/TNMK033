@@ -33,18 +33,19 @@
         $legoData = [];
         $legoData['title'] = "Sets over time";
         $legoData['data'] = $setsByTime;
+        $legoData['dataType'] = "sets";
 
         //send to js for rendering
         $setsByTimeString = json_encode($legoData);
         echo "<script type='text/javascript'>",
-        "createGraph('histogram', '$setsByTimeString', '.statistics');",
+        "createGraph('histogram', '$setsByTimeString', '.stats');",
         "</script>"
         ;
 
         //test junk
-        echo '<pre>';
-        print_r($legoData);
-        echo '</pre>';
+        // echo '<pre>';
+        // print_r($legoData);
+        // echo '</pre>';
 
     ?>
 </html>

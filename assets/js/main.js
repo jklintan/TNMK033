@@ -35,7 +35,8 @@ const generateTestData = (amount) => {
     const element = { number: Math.random() * 10, text: 'datanamn' }
     testData.push(element)
   }
-  return testData
+  const result = { data: testData }
+  return result
 }
 
 const init = () => {
@@ -69,14 +70,14 @@ const createNumberSlider = (sliderData) => {
   const arrowLeft = document.createElement('a')
 
   parent.classList.add('grapher', 'numberSlider')
-  header.textContent = sliderData[0].title
-  slider.style.width = sliderData.length * 100 + '%'
+  header.textContent = sliderData.title
+  slider.style.width = sliderData.data.length * 100 + '%'
   slider.classList.add('slider')
   slider.dataset.slider = 0 // The data to show
-  sliderData.forEach(object => {
+  sliderData.data.forEach(object => {
     const entry = document.createElement('div')
     const p = document.createElement('p')
-    p.textContent = object.data + ' ' + object.text
+    p.textContent = object.number + ' ' + object.text
     entry.appendChild(p)
     slider.appendChild(entry)
   })
@@ -108,23 +109,32 @@ const findTallestData = (histogramData) => {
 }
 
 /**
- * @param {dataobj[]} histogramData
+ * @param {dataobj[]} barData
  * @typedef {Object}  dataobj              - The data object
  * @property {Number}  dataobj.text    - The text describing the part
  * @property {Number}  dataobj.number    - The number to diplay
  */
-const createBar = (barData, tallest) => {
+const createBar = (barData, dataType, tallest) => {
   const bar = document.createElement('div')
   const info = document.createElement('div')
   const number = document.createElement('p')
   const text = document.createElement('p')
   const height = (barData.number / tallest) * 100
+
+  let numberString
+  if (dataType) {
+    numberString = barData.number + ' ' + dataType
+  } else {
+    numberString = barData.number
+  }
+  if (height < 100 / 3) {
+    bar.classList.add('top')
+  }
   bar.style.height = height + '%'
-  // if (height > )
   bar.classList.add('bar')
   info.classList.add('barInfo')
   text.textContent = barData.text
-  number.textContent = barData.number
+  number.textContent = numberString
   info.appendChild(text)
   info.appendChild(number)
   bar.appendChild(info)
@@ -139,18 +149,23 @@ const createBar = (barData, tallest) => {
  */
 const createHistogram = (histogramData) => {
   const tallest = findTallestData(histogramData)
-  // console.log(tallest)
   const parent = document.createElement('div')
+  const scrollbox = document.createElement('div')
+  const title = document.createElement('h2')
+  title.textContent = histogramData.title
   parent.classList.add('grapher', 'histogram')
+  parent.appendChild(title)
 
   let delay = 0
   const step = 1000 / histogramData.length
+  const length = histogramData.data
   histogramData.data.forEach(entry => {
-    const bar = createBar(entry, tallest)
+    const bar = createBar(entry, histogramData.dataType, tallest)
     bar.style.animationDelay = delay + 'ms'
     delay += step
-    parent.appendChild(bar)
+    scrollbox.appendChild(bar)
   })
-  document.querySelector('body').appendChild(parent)
-  // return parent
+  scrollbox.classList.add('slider')
+  parent.appendChild(scrollbox)
+  return parent
 }

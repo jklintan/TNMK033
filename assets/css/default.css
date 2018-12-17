@@ -1,19 +1,16 @@
 body {
     margin: 0;
     background-color: #393e41;
+    overflow-x: hidden;
 }
 
-.row {
-    flex-direction: row;
-}
-
-.column {
-    flex-direction: column;
-}
-
-h1, h2, h3, p, a {
+h1, h2, h3, p, a, button {
     font-family: 'Montserrat', sans-serif;
     color: #fff;
+}
+
+h1{
+    text-align:center;
 }
 
 a {
@@ -35,6 +32,7 @@ header {
     position: absolute;
     top: 0;
     width: 100vw;
+    right: 0;
     justify-content: flex-end;
 }
 
@@ -50,4 +48,54 @@ input {
     border: 0;
     background-color: #fff;
     text-align: left;
+}
+button {
+    background-color: #393e41;
+    color: #fff;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 3px;
+    border: 0;
+    align-self: center;
+    transition: 200ms;
+}
+button:hover {
+    background-color: #52595e;
+    
+}
+
+.row {
+    flex-direction: row;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.card{
+    background-color: #fff !important;
+    padding: 40px;
+    min-width: 300px;
+    margin: 15px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+    flex-direction: column;
+}
+
+.card:first-child{
+    margin-top: 0;
+}
+
+.card p, a, h2{
+    color: #393e41;
+}
+
+.card img{
+    object-fit: cover;
+}
+
+.container{
+    margin-top: 5vh !important;
+    flex-direction: column;
+    margin: auto;
 }
