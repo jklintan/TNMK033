@@ -6,7 +6,7 @@
         die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
     }
 
-    // Number of sets
+    // Number of sets in total
     $setID = "SELECT COUNT(*) FROM sets";
     $setQuery = mysqli_query($connection, $setID);
     $numbOfSets = mysqli_fetch_array($setQuery);

@@ -41,6 +41,10 @@ header a {
     color: #fdfffc;
 }
 
+form{
+    display: flex;
+}
+
 input {
     margin: 0;
     padding: 10px;
@@ -60,8 +64,7 @@ button {
     transition: 200ms;
 }
 button:hover {
-    background-color: #52595e;
-    
+    background-color: #52595e;   
 }
 
 .row {

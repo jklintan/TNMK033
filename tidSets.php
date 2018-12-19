@@ -22,7 +22,7 @@
         }
 
         //change keys for js rendering
-        for($i = 0; $i < count($setsByTime); $i++){
+        for($i = 0; $i < count($setsByTime) - 1; $i++){
             $setsByTime[$i]['text'] = $setsByTime[$i][0];
             $setsByTime[$i]['number'] = $setsByTime[$i][1];
             unset($setsByTime[$i][0]);

@@ -32,6 +32,7 @@ body{
     text-align: left;
     margin-right: 4px;
 }
+
 .start .centerBox #scrollDownArrow {
     font-size: 32px;
     margin-top: 50px;
@@ -40,6 +41,7 @@ body{
 }
 
 .stats {
+    flex-wrap: wrap;
     width: 100vw;
     justify-content: center;
 }
@@ -52,7 +54,7 @@ body{
     border-radius: 3px;
 }
 
-#searchField i {
+#searchField button {
     display: flex;
     color: #fff;
     justify-content: center;
@@ -61,7 +63,7 @@ body{
     transition: 200ms;
     cursor: pointer;
 }
-#searchField i:hover{
+#searchField button:hover{
     background-color: rgba(255, 255, 255, 0.2);
 }
 

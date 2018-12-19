@@ -2,6 +2,8 @@
     include 'head.php';
 ?>
 <body>
+<div class="statistics">
+</div>
 <?php
     include 'header.php';
 ?>
@@ -12,7 +14,7 @@
             die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>\n</body>\n</html>\n"); //Error message if connection failed
         }
 
-        $data = "SELECT DISTINCT Partname, SUM(Quantity) FROM inventory, parts WHERE inventory.SetID='10179-1' AND ItemID=PartID 
+        $data = "SELECT DISTINCT Partname, SUM(Quantity) FROM inventory, parts WHERE inventory.SetID='$_GET[query]' AND ItemID=PartID 
                  GROUP BY Partname ORDER BY Partname ASC";
         $contents = mysqli_query($connection, $data);
 
@@ -34,7 +36,7 @@
         }
 
         //query for set information
-        $titleData = "SELECT Setname, SetID FROM sets WHERE sets.SetID='10179-1'";
+        $titleData = "SELECT Setname, SetID FROM sets WHERE sets.SetID='$_GET[query]'";
         $titleQuery = mysqli_query($connection, $titleData);
         $title = mysqli_fetch_assoc($titleQuery);
 
@@ -43,6 +45,7 @@
         $SetID = $title['SetID'];
         $filename = "SL/$SetID.jpg";
         $setURL = "$prefix$filename";
+
 
         //assign proper data structure for js rendering
         $legoData = [];
@@ -59,5 +62,7 @@
         "</script>"
         ;
     ?>
+
+
     </body>
 </html>

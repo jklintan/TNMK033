@@ -4,7 +4,7 @@
 const createGraph = (type, jsondata, targetSelector) => {
   // console.log(JSON.parse(jsondata))
   const graph = JSON.parse(jsondata)
-  console.log(graph)
+  // console.log(graph)
   if (graph.data[0].number) {
     graph.data.forEach(entry => {
           entry.number = parseInt(entry.number)
@@ -17,6 +17,13 @@ const createGraph = (type, jsondata, targetSelector) => {
   if (type === 'histogram') {
     graphElement = createHistogram(graph)
   }
+  if (type === 'pieChart') {
+    graphElement = createPieChart(graph)
+  }
+  if (type === 'timeChart') {
+    graphElement = createTimeChart(graph)
+  }
+
   if (graphElement) {
     const target = document.querySelector(targetSelector)
     if (target) {
@@ -165,6 +172,90 @@ const createHistogram = (histogramData) => {
     delay += step
     scrollbox.appendChild(bar)
   })
+  const spacer = document.createElement('div')
+  spacer.style.padding = '10px'
+  scrollbox.appendChild(spacer)
+  scrollbox.classList.add('slider')
+  parent.appendChild(scrollbox)
+  return parent
+}
+
+
+/**
+ * @param {dataobj[]} pieChartData
+ * @typedef {Object}  dataobj              - The data object
+ * @property {Number}  dataobj.text    - The text describing the part
+ * @property {Number}  dataobj.number    - The number to diplay
+ */
+const createPieChart = (pieChartData) => {
+  const parent = document.createElement('div')
+  parent.classList.add('pieChart', 'grapher')
+  let total = 0
+  console.log(pieChartData.data)
+  pieChartData.data.forEach(data => {
+    console.log('added')
+    total += data.number
+  })
+  console.log('total: ' + total)
+  let offset = 0
+  pieChartData.data.forEach(data => {
+    const procent = data.number / total
+    // console.log('data.number: ' + data.number)
+    // console.log('procent: ' + procent)
+
+    // console.log(procent * 360)
+    const color = '#'+Math.floor(Math.random()*16777215).toString(16);
+    const slot = document.createElement('div')
+    const intersect = document.createElement('div')
+    slot.classList.add('slot')
+    slot.style.transform = 'rotate(' + offset + 'deg)'
+    offset += procent * 360
+    intersect.classList.add('intersect')
+    intersect.style.transform = 'rotate(' + (procent * 360) + 'deg)'
+    intersect.style.backgroundColor = color
+    if (procent > .5) {
+      console.log('larger')
+      slot.style.overflow = 'visible'
+      slot.style.backgroundColor = color
+      slot.style.display = 'flex'
+    }
+    slot.appendChild(intersect)
+    parent.appendChild(slot)
+  })
+  return parent
+}
+
+
+/**
+ * @param {dataobj[]} pieChartData
+ * @typedef {Object}  dataobj              - The data object
+ * @property {Number}  dataobj.text    - The text describing the part
+ * @property {Number}  dataobj.number    - The number to diplay
+ */
+
+const createTimeChart = (histogramData) => {
+  const output = JSON.stringify(histogramData)
+  console.log(output)
+  const tallest = findTallestData(histogramData)
+  const parent = document.createElement('div')
+  const scrollbox = document.createElement('div')
+  const title = document.createElement('h2')
+  title.textContent = histogramData.title
+  parent.classList.add('grapher', 'histogram')
+  parent.appendChild(title)
+
+  let delay = 0
+  const step = 1000 / histogramData.length
+  const length = histogramData.data
+  histogramData.data.forEach(entry => {
+    const bar = createBar(entry, histogramData.dataType, tallest)
+    bar.style.animationDelay = delay + 'ms'
+    delay += step
+    scrollbox.appendChild(bar)
+  })
+  const spacer = document.createElement('div')
+  spacer.style.padding = '10px'
+  scrollbox.appendChild(spacer)
   scrollbox.classList.add('slider')
   parent.appendChild(scrollbox)
   return parent

@@ -5,14 +5,14 @@
 <?php
     include 'header.php';
 ?>
-</body>
     <div class="start">
         <div class="centerBox">
             <img src="assets/img/lego.svg" alt="">
             <div id="searchField">
-                <input type="text" name="" placeholder="Star Wars..." id="" autofocus>
-                <i class="fas fa-search"></i>
-                <!-- <p class="cardlayout">Lorem ipsum dolor amet woke aesthetic hella kickstarter, craft beer vaporware sartorial air plant echo park drinking vinegar kale chips schlitz hashtag flannel. Blue bottle af jianbing trust fund migas venmo green juice man bun pabst meggings post-ironic etsy hexagon. Listicle pork belly seitan, cornhole man bun narwhal cray irony. Kinfolk fam readymade portland, truffaut authentic kitsch meditation asymmetrical biodiesel prism.</p> -->
+            <form action="search.php" method="GET">
+                <input required type="text" name="query" placeholder="Star Wars..." id="" autofocus>
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>         
             </div>
             <p>Sök i databasen efter ett specifikt legoset för att få reda på mer information och statistik. Scrolla ner för att se vad som finns i databasen!</p>
             <i id="scrollDownArrow" class="fas fa-chevron-down"></i>
@@ -20,11 +20,13 @@
     </div>
 
     <div class="stats">
-        <div class="grapher speedometer" data-grapher="{}"></div>
+
     </div>
     <?php
         include 'tidSets.php';
+        include 'assets/phpModules/timeChart.php';
         include 'assets/phpModules/totalParts.php';
+        include 'assets/phpModules/stegu.php';
     ?>
 </body>
 </html>
