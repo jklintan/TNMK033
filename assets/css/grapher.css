@@ -273,4 +273,12 @@
 
 .grapher.timeChart {
   flex: 1;
+  position: relative;
+
+}
+
+.grapher.timeChart .line {
+  background-color: #fff;
+  transform-origin: left;
+  position: absolute;
 }

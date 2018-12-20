@@ -1,11 +1,20 @@
 <!-- Visa ett historgram för alla bitar i satserna  -->
+<html>
+<body>
+<head>
+<?php
+    include 'head.php';
+    include 'header.php';
+?>        
+<div class="statistics"></div>
+</head>
 <?php
     $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //Connect to Lego database
     if (!$connection){
         die("<p>MySQL error:</p> <p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
     }
 
-    $data = "SELECT DISTINCT Partname, SUM(Quantity) FROM inventory, parts WHERE inventory.SetID='$_POST' AND ItemID=PartID GROUP BY Partname ORDER BY Partname ASC";
+    $data = "SELECT DISTINCT Partname, SUM(Quantity) FROM inventory, parts WHERE inventory.SetID='$_GET[query]' AND ItemID=PartID GROUP BY Partname ORDER BY Partname ASC";
     $contents = mysqli_query($connection, $data);
 
     $things = [];
@@ -21,8 +30,10 @@
         unset($things[$i][1]);
     }
 
+
+
     //query for set information
-    $titleData = "SELECT Setname, SetID FROM sets WHERE sets.SetID='$_POST'";
+    $titleData = "SELECT Setname, SetID FROM sets WHERE sets.SetID='$_GET[query]'";
     $titleQuery = mysqli_query($connection, $titleData);
     $title = mysqli_fetch_assoc($titleQuery);
 
@@ -31,6 +42,7 @@
     $SetID = $title['SetID'];
     $filename = "SL/$SetID.jpg";
     $setURL = "$prefix$filename";
+
     //assign proper data structure for js rendering
     $legoData = [];
     $legoData['title'] = $title['Setname'];
@@ -46,3 +58,6 @@
     "</script>"
     ;
 ?>
+
+</body>
+</html>

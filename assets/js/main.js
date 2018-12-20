@@ -260,46 +260,34 @@ const randomColor = () => {
  * @property {Number}  dataobj.text    - The text describing the part
  * @property {Number}  dataobj.number    - The number to diplay
  */
-
 const createTimeChart = (timeData) => {
-  let lastPos = {x: 0, y: 550}
-  const createLine = (timeData, type, tallest, canvas, xpos) => {
-    ctx.strokeStyle = '#fff'
-    const ypos = timeData.number/tallest * canvas.height
-    ctx.moveTo(lastPos.x, lastPos.y)
-    ctx.lineTo(xpos, 550 - ypos)
-    ctx.stroke()
-    lastPos.x = xpos
-    lastPos.y = 550 - ypos
+  let lastY = 0
+
+  const createLine = (lineData, step, tallest) => {
+    console.log(lastY)
+    const line = document.createElement('div')
+    const deltaY = lineData.number - lastY
+    line.classList.add('line')
+    const length = Math.sqrt(Math.pow(deltaY, 2) + Math.pow(step, 2))
+    console.log(length)
+    line.style.width = length + 'px'
+    line.style.height = '1px'
+    lastY = lineData.number
+    return line
   }
-  const tallest = findTallestData(timeData)
+
+  const renderGraph = (parent) => {
+    const tallest = findTallestData(timeData)
+    const windowSize = {w: parent.offsetWidth, h: parent.offsetHeight}
+    let step = windowSize.w / timeData.data.length
+    // console.log(step)
+    timeData.data.forEach(lineData => {
+      parent.appendChild(createLine(lineData, step, tallest))
+      // step += step
+    })
+  }
   const parent = document.createElement('div')
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext("2d")
-  ctx.moveTo(lastPos.x, lastPos.y)
-  const title = document.createElement('h2')
-  const length = timeData.data.length
-  // window.innerWidth
-  const step = (960 * 0.7 - 50) / length
-  title.textContent = timeData.title
   parent.classList.add('grapher', 'timeChart')
-  parent.appendChild(title)
-
-  canvas.height = 550
-  console.log(timeData)
-  canvas.width = length * step
-  canvas.style.width = length * step
-  canvas.style.position = 'absolute'
-
-  xpos = 0
-  timeData.data.forEach(entry => {
-    xpos += step
-    createLine(entry, timeData.dataType, tallest, canvas, xpos)
-  })
-  const spacer = document.createElement('div')
-  canvas.appendChild(spacer)
-  canvas.classList.add('slider')
-  parent.appendChild(canvas)
+  window.addEventListener('load', () => renderGraph(parent))
   return parent
 }
-

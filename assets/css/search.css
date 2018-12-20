@@ -6,37 +6,18 @@
 .searchCard{
     background-color: #fff !important;
     padding: 40px;
-    max-width: 300px;
+    width: 300px;
     margin: 15px;
     border-radius: 5px;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
     flex-direction: column;
     flex-wrap: wrap;
     transition: all ease-out .2s;
-    justify-content: center;
 }
 
 .searchCard:hover{
     box-shadow: 0px 0px 30px 2px rgba(0,0,0,1);
-}
-
-#modal{
-    transition: all ease-in .3s;
-    position: fixed;
-    color: black;
-    text-align: center;
-    pointer-events: none;
-    opacity: 0;
-    width: 70%;
-    height: 60%;
-    top: 50%;
-    left: 50%;
-    padding: 40px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
-    transform: translate(-50%,-50%);
-    background: white;
-    line-height: 2;
+    background-color: white !important;
 }
 
 a:hover{
@@ -68,4 +49,13 @@ a h2:hover{
 
 form{
     justify-content: center;
+    width: 70%;
+}
+
+button{
+    cursor: pointer;
+}
+
+input{
+    width: 50%;
 }

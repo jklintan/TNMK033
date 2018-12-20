@@ -20,9 +20,9 @@
 
                     <div class="card">
                         <h2>Om denna sida</h2>
-                        <p>Denna sida är en plats för statistik om de legoset som Lego har gett ut. Här kan folk som är
-                            intresserade av vad Lego gjort genom åren hitta information, men också säljare som vill hålla koll på vilka bitar som är
-                            lätta och svåra att få tag på. 
+                        <p>Denna sida är en plats för statistik om de legoset som Lego har gett ut. Här hittar du som är
+                            intresserade av vad Lego gjort genom åren hitta information. Även om du är säljare som vill hålla koll på vilka bitar som är
+                            lätta och svåra att få tag på så är detta sidan för dig. 
                         </p>
 
                         <p>Hemsidan är skapad som projekt för kursen Elektronisk Publicering (TNMK033) på Linköpings Universitet.</p>
