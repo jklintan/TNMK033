@@ -1,6 +1,4 @@
-<html>
-
-    <?php
+<?php
 
         $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
         if(mysqli_error($connection)) {
@@ -10,7 +8,4 @@
         //ADD DATA FROM STEGUS COLLECTION
 
         mysqli_close($connection);
-    ?>
-
-
-</html>
+?>

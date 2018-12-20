@@ -1,6 +1,4 @@
-<html>
-<script src="assets/js/main.js"></script>
-    <?php
+<?php
         $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
 
         if(!$connection){
@@ -38,7 +36,7 @@
         //send to js for rendering
         $setsByTimeString = json_encode($legoData);
         echo "<script type='text/javascript'>",
-        "createGraph('histogram', '$setsByTimeString', '.stats');",
+        "createGraph('histogram', '$setsByTimeString', '.banner');",
         "</script>"
         ;
 
@@ -46,6 +44,4 @@
         // echo '<pre>';
         // print_r($legoData);
         // echo '</pre>';
-
-    ?>
-</html>
+?>

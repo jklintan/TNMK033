@@ -3,20 +3,21 @@
     background: linear-gradient(to bottom, #123250 0%,#235789 100%);
     position: relative;
     border-radius: 4px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+    margin: 25px;
 }
 
 .grapher.numberSlider {
-    max-width: 300px;
     overflow: hidden;
     
 }
 
 .grapher.numberSlider h2 {
     text-align: center;
-    color:white;
+    color: white;
 }
 
-.grapher.numberSlider p, a{
+.grapher.numberSlider p, .grapher.numberSlider a{
   color: white;
 }
 
@@ -28,12 +29,14 @@
     padding: 0 10px;
     user-select: none;
     cursor: pointer;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+   /* -webkit-touch-callout: none; 
+    -webkit-user-select: none;
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; /
+    user-select: none;´
+    */
+     /* Non-prefixed version, currently supported by Chrome and Opera */ 
 }
 
 .grapher.numberSlider a.left {
@@ -55,6 +58,8 @@
 }
 
 .grapher.histogram {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   height: 500px;
   background: linear-gradient(to bottom, #123250 0%,#235789 100%);
@@ -63,7 +68,6 @@
 }
 
 .grapher.histogram div.slider {
-  /* display: flex; */
   padding: 20px;
   flex-direction: row;
   align-items: flex-end;
@@ -84,11 +88,16 @@
   pointer-events: none;
 }
 
-.grapher.histogram h2 {
+.grapher.histogram h2, .grapher.timeChart h2 {
   position: absolute;
   top: 0;
   left: 20px;
   color: #fff;
+}
+
+.grapher.pieChart h2 {
+  color: #fff;
+  margin-left: 20px;
 }
 
 .grapher.histogram .bar {
@@ -121,12 +130,12 @@
 /* Info box */
 .grapher.histogram .bar div.barInfo {
   position: fixed;
+  left: 30px;
   white-space: nowrap;
   flex-direction: column;
   pointer-events: none;
   opacity: 0;
   padding: 10px;
-  left: 30px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%,rgba(255, 255, 255, 0.05) 100%);
   color: #fff;
   box-shadow: none;
@@ -143,8 +152,7 @@
   top: -70px !important;
   border-left: 0 solid #fff !important;
   border-right: 0 solid #fff !important;
-border-bottom: 2px solid #fff !important;
-  
+  border-bottom: 2px solid #fff !important;
 }
 
 /* Info box text */
@@ -209,32 +217,60 @@ border-bottom: 2px solid #fff !important;
 }
 
 .grapher.pieChart {
+  align-items: center;
+  padding: 10px;
+  /* padding-top: 100px; */
+}
+
+.grapher.pieChart .list {
+  flex-direction: column;
+  justify-content: center;
+}
+
+.grapher.pieChart .list div {
+  margin: 10px;
+  align-items: center;
+}
+
+.grapher.pieChart .list div div {
+  padding: 5px;
+  background-color: #fff;
+  border-radius: 100%;
+}
+
+.grapher.pieChart .list p {
+  margin: 0;
+}
+
+.grapher.pieChart .chart {
   position: relative;
   width: 200px;
   height: 200px;
   align-items: center;
   justify-content: center;
-  border-radius: 100%;
-  overflow: hidden;
 }
 
-.grapher.pieChart .slot {
+.grapher.pieChart .chart .slot {
   height: 100%;
   width: 50%;
   right: 0;
   overflow: hidden; /* Change if over 50% */
-  transform-origin-x: left;
+  transform-origin: left;
   border-radius: 0 100px 100px 0;/* Make responsive! */
 }
 
-.grapher.pieChart .intersect {
+.grapher.pieChart .chart .intersect {
   height: 100%;
   width: 100%;
   left: -100%;
   border-radius: 100px 0 0 100px; /* Make responsive! */
-  transform-origin-x: right;
+  transform-origin: right;
 }
 
-.grapher.pieChart div {
+.grapher.pieChart .chart div {
   position: absolute;  
+}
+
+.grapher.timeChart {
+  flex: 1;
 }

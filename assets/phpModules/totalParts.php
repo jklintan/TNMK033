@@ -1,30 +1,45 @@
 <?php
     // Counts all sets in the catalog and total amount of different types of pieces in the catalog
-
     $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
     if(mysqli_error($connection)) {
-        die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
+        die("<p>MySQL error:</p> <p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
     }
 
     // Number of sets in total
     $setID = "SELECT COUNT(*) FROM sets";
     $setQuery = mysqli_query($connection, $setID);
-    $numbOfSets = mysqli_fetch_array($setQuery);
+    if(mysqli_num_rows($setQuery) == 0 ) {
+        print("<p>Error in reading of data...</p>");
+    } else {
+        $numbOfSets = mysqli_fetch_array($setQuery);
+    }
 
     // Number of unique sets
     $uSetID = "SELECT COUNT(DISTINCT inventory.SetID) FROM inventory";
     $uSetQuery = mysqli_query($connection, $uSetID);
-    $uNumbOfSets = mysqli_fetch_array($uSetQuery);
+    if(mysqli_num_rows($uSetQuery) == 0 ) {
+        print("<p>Error in reading of data...</p>");
+    } else {
+        $uNumbOfSets = mysqli_fetch_array($uSetQuery);
+    }
 
     // Number of pieces in total
     $legoID = "SELECT SUM(inventory.Quantity) FROM inventory WHERE ItemtypeID='P'";
     $legoQuery = mysqli_query($connection, $legoID);
-    $numbOfPieces = mysqli_fetch_array($legoQuery);
-
+    if(mysqli_num_rows($legoQuery) == 0 ) {
+        print("<p>Error in reading of data...</p>");
+    } else {
+        $numbOfPieces = mysqli_fetch_array($legoQuery);
+    }
+    
     // Number of unique pieces
     $uLegoID = "SELECT COUNT(DISTINCT inventory.ItemID) FROM inventory WHERE ItemtypeID='P'";
     $uLegoQuery = mysqli_query($connection, $uLegoID);
-    $uNumbOfPieces = mysqli_fetch_array($uLegoQuery);
+    if(mysqli_num_rows($uLegoQuery) == 0 ) {
+        print("<p>Error in reading of data...</p>");
+    } else {
+        $uNumbOfPieces = mysqli_fetch_array($uLegoQuery);
+    }
 
     // Store the results in an array with objects
     $data = [];
@@ -42,8 +57,8 @@
     $totalsResultString = addslashes(json_encode($data));
 
     // Send the results to javascript for rendering
-    echo "<script type='text/javascript'>",
-    "createGraph('numberSlider','$totalsResultString', '.stats');",
+    echo "<script>",
+    "createGraph('numberSlider','$totalsResultString', '.rightGraphics');",
     "</script>"
     ;
 

@@ -1,4 +1,4 @@
-.results{
+#results{
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -13,12 +13,40 @@
     flex-direction: column;
     flex-wrap: wrap;
     transition: all ease-out .2s;
+    justify-content: center;
 }
 
 .searchCard:hover{
     box-shadow: 0px 0px 30px 2px rgba(0,0,0,1);
 }
 
+#modal{
+    transition: all ease-in .3s;
+    position: fixed;
+    color: black;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0;
+    width: 70%;
+    height: 60%;
+    top: 50%;
+    left: 50%;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+    transform: translate(-50%,-50%);
+    background: white;
+    line-height: 2;
+}
+
+a:hover{
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+a h2:hover{
+    transition: all ease-out .2s;
+    color: #235789;
+}
 
 .searchCard h2{
     margin-bottom: 8px;
@@ -30,7 +58,14 @@
 }
 
 .searchCard img{
+    position: relative;
+    display: block;
+    margin: 0 auto;
     height: auto !important;
     align-self: center;
     max-width: 100%;
+}
+
+form{
+    justify-content: center;
 }

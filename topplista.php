@@ -1,8 +1,4 @@
-<?php
-    include 'head.php';
-?>
-
-    <script type="text/javascript">
+   <script type="text/javascript">
         function validate() {
             var url = document.getElementById("url").value;
             var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
@@ -39,11 +35,6 @@
     <div id="loader"></div>
 
     <div id="noshow" class="animate-bottom">
-
-        <?php 
-            include 'header.php';
-        ?>
-            
         <div class="container">
             <h1> Topplista! </h1>
 
@@ -92,7 +83,6 @@
 
                             $topPiece = "SELECT DISTINCT(SetID), SUM(inventory.Quantity) AS totalpieces FROM inventory GROUP BY SetID ORDER BY totalpieces DESC LIMIT 3";
                             $contents = mysqli_query($connection, $topPiece);
-
                             if(mysqli_num_rows($contents) == 0) {
                                 print("<p>Error in reading of data...</p>\n");
                             } else {
@@ -125,16 +115,19 @@
                             //query database for number how many sets were released during a year
                             $orderedSets = "SELECT Setname, Year, SetID FROM sets ORDER BY Year ASC LIMIT 1";
                             $query = mysqli_query($connection, $orderedSets);
-
-                            while($assoc = mysqli_fetch_array($query)){
-                                $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-                                $ItemID = $assoc[2];
-                                $year = $assoc[1];
-                                    
-                                $filename = "SL/$ItemID.jpg";
-                                print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
-                                print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
-                                $i++;
+                            if(mysqli_num_rows($query) == 0) {
+                                print("<p>Error in reading of data...</p>\n");
+                            } else {
+                                while($assoc = mysqli_fetch_array($query)){
+                                    $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                                    $ItemID = $assoc[2];
+                                    $year = $assoc[1];
+                                        
+                                    $filename = "SL/$ItemID.jpg";
+                                    print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
+                                    print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
+                                    $i++;
+                                }
                             }
                         ?>
                     </div>
@@ -155,9 +148,13 @@
                             $orderedSets = "SELECT Year, COUNT(*) FROM sets GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1";
                             $query = mysqli_query($connection, $orderedSets);
                             //assign values from database into an array
-                            while($assoc = mysqli_fetch_array($query)){
-                                print("<h4> $assoc[0]</h4> <p> Antal satser: $assoc[1] </p>");
-                                $i++;
+                            if(mysqli_num_rows($query) == 0) {
+                                print("<p>Error in reading of data...</p>\n");
+                            } else {
+                                while($assoc = mysqli_fetch_array($query)){
+                                    print("<h4> $assoc[0]</h4> <p> Antal satser: $assoc[1] </p>");
+                                    $i++;
+                                }
                             }
                         ?>
                     </div>
@@ -289,16 +286,19 @@
                             //query database for number how many sets were released during a year
                             $orderedSets = "SELECT Setname, Year, SetID FROM sets WHERE Year <>'?' ORDER BY Year DESC LIMIT 1";
                             $query = mysqli_query($connection, $orderedSets);
-
-                            while($assoc = mysqli_fetch_array($query)){
-                                $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-                                $ItemID = $assoc[2];
-                                $year = $assoc[1];
-                                    
-                                $filename = "SL/$ItemID.jpg";
-                                print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
-                                print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
-                                $i++;
+                            if(mysqli_num_rows($query) == 0) {
+                                print("<p>Error in reading of data...</p>\n");
+                            } else {
+                                while($assoc = mysqli_fetch_array($query)){
+                                    $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
+                                    $ItemID = $assoc[2];
+                                    $year = $assoc[1];
+                                        
+                                    $filename = "SL/$ItemID.jpg";
+                                    print("<p> Satsnamn: $assoc[0] </p> <p> Från år: $assoc[1] </p>");
+                                    print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
+                                    $i++;
+                                }
                             }
                         ?>
                     </div>

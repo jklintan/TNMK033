@@ -1,9 +1,4 @@
 <?php
-    include 'head.php';
-?>
-
-
-<?php
     //Summera antalet satser och bitar som Stefan har i sin samling
     $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
     if(mysqli_error($connection)) {
