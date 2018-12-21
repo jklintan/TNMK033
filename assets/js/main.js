@@ -253,7 +253,6 @@ const randomColor = () => {
   return color
 }
 
-
 /**
  * @param {dataobj[]} pieChartData
  * @typedef {Object}  dataobj              - The data object
@@ -263,31 +262,40 @@ const randomColor = () => {
 const createTimeChart = (timeData) => {
   let lastY = 0
 
-  const createLine = (lineData, step, tallest) => {
-    console.log(lastY)
-    const line = document.createElement('div')
-    const deltaY = lineData.number - lastY
-    line.classList.add('line')
-    const length = Math.sqrt(Math.pow(deltaY, 2) + Math.pow(step, 2))
-    console.log(length)
-    line.style.width = length + 'px'
-    line.style.height = '1px'
-    lastY = lineData.number
-    return line
+  const createLine = (x, y, deltaX, deltay, ctx) => {
+    ctx.fillStyle = "#FF0000";
+    ctx.fillRect(0, 0, 150, 75);
+    console.log('drawn')
   }
 
   const renderGraph = (parent) => {
+    console.log('rednerd')
     const tallest = findTallestData(timeData)
-    const windowSize = {w: parent.offsetWidth, h: parent.offsetHeight}
+    const windowSize = { w: parent.offsetWidth, h: parent.offsetHeight }
     let step = windowSize.w / timeData.data.length
     // console.log(step)
+    let x = 0
+    let y = 0
+    const ctx = canvas.getContext('2d')
     timeData.data.forEach(lineData => {
-      parent.appendChild(createLine(lineData, step, tallest))
+      console.log('looped')
+      const deltaY = lineData.number / tallest
+      createLine(x, y, step, deltaY, ctx)
+      x += step
+      y += deltaY
+      console.log('added')
       // step += step
     })
   }
   const parent = document.createElement('div')
+  const canvas = document.createElement('canvas')
   parent.classList.add('grapher', 'timeChart')
+  canvas.classList.add('graph')
+  console.log('added!')
   window.addEventListener('load', () => renderGraph(parent))
+  window.addEventListener('load', function (event) {
+    console.log('All resources finished loading!')
+  })
+  parent.appendChild(canvas)
   return parent
 }

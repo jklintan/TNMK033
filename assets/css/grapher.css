@@ -274,6 +274,8 @@
 .grapher.timeChart {
   flex: 1;
   position: relative;
+  min-width: 600px;
+  min-height: 400px;
 
 }
 
