@@ -24,11 +24,8 @@
     //change keys for js rendering
     $sum = 0;
     for($i = 0; $i < count($setsByTime); $i++){
-        $setsByTime[$i]['text'] = $setsByTime[$i][0];
+        $setsByTime[$i]['text'] = "År " . $setsByTime[$i][0];
         //Set the last element in array when all sets summed
-        if ($setsByTime[$i]['text'] == '?'){ 
-            $setsByTime[$i]['text'] = '2018';
-        }
         $sum += $setsByTime[$i][1];
         $setsByTime[$i]['number'] = $sum;
         unset($setsByTime[$i][0]);
@@ -37,9 +34,10 @@
 
     //array for storing title and data, for rendering
     $legoData = [];
-    $legoData['title'] = "Antal set mellan 1949 och 2018";
+    $legoData['title'] = "Antal satser mellan 1949 och 2018";
     $legoData['data'] = $setsByTime;
-    $legoData['dataType'] = "sets";
+    $legoData['dataType1'] = "År";
+    $legoData['dataType'] = "Set";
 
     //send to js for rendering
     $setsChange = json_encode($legoData);

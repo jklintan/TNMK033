@@ -1,24 +1,23 @@
 .grapher {
     flex-direction: column;
-    background: linear-gradient(to bottom, #123250 0%,#235789 100%);
+    background: linear-gradient(to bottom, #725a46 0%,#c8b4a0 100%);
     position: relative;
     border-radius: 4px;
     box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
-    margin: 25px;
+    margin: 20px;
 }
 
 .grapher.numberSlider {
     overflow: hidden;
-    
 }
 
 .grapher.numberSlider h2 {
     text-align: center;
-    color: white;
+    color: #fff;
 }
 
 .grapher.numberSlider p, .grapher.numberSlider a{
-  color: white;
+  color: #fff;
 }
 
 .grapher.numberSlider a {
@@ -29,14 +28,6 @@
     padding: 0 10px;
     user-select: none;
     cursor: pointer;
-   /* -webkit-touch-callout: none; 
-    -webkit-user-select: none;
-    -khtml-user-select: none; 
-    -moz-user-select: none; 
-    -ms-user-select: none; /
-    user-select: none;´
-    */
-     /* Non-prefixed version, currently supported by Chrome and Opera */ 
 }
 
 .grapher.numberSlider a.left {
@@ -60,9 +51,9 @@
 .grapher.histogram {
   position: relative;
   overflow: hidden;
-  width: 100%;
+  flex: 1;
+  margin: 20px;
   height: 500px;
-  background: linear-gradient(to bottom, #123250 0%,#235789 100%);
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
@@ -73,9 +64,10 @@
   align-items: flex-end;
   height: 100%;
   overflow-x: scroll;
+  overflow-y: hidden;
 }
 
-.grapher.histogram:after {
+.grapher.histogram:after, .grapher.timeChart:after {
   position: absolute;
   left: 0;
   right: 0;
@@ -103,8 +95,6 @@
 .grapher.histogram .bar {
   min-width: 20px;
   background-color: rgba(255, 255, 255, 0.2);
-  /* background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 0%,rgba(255, 255, 255, 0.2) 100%); */
-  /* border-top: 2px solid rgba(255, 255, 255, 0.4); */
   transition: 200ms;
   margin: 0 5px;
   animation: rise 500ms;
@@ -274,13 +264,47 @@
 .grapher.timeChart {
   flex: 1;
   position: relative;
-  min-width: 600px;
+  justify-content: center;
+  position: relative;
+  /* min-width: 600px; */
   min-height: 400px;
+  max-width: calc(100vw - 40px);
 
 }
 
-.grapher.timeChart .line {
-  background-color: #fff;
-  transform-origin: left;
+.grapher.timeChart .title {
+  /* text-shadow: 0 0 20px rgba(0,0,0,0.3); */
+  top: 40px;
+}
+
+.grapher.timeChart .dot {
+  transition: 200ms;
+}
+
+.grapher.timeChart .rect:hover {
+  transition: 200ms;
+  fill: rgba(255, 255, 255, 0.05)
+}
+
+/*.grapher.timeChart .rect:hover+.dot {
+  r: 8;
+}*/
+
+.grapher.grapher.timeChart .slider {
+  overflow: scroll;
+  overflow-y: hidden;
+  align-items: center;
+  height: 100%;
+}
+
+.grapher.grapher.timeChart .textContainer {
   position: absolute;
+  flex-direction: column;
+  left: 20px;
+  top: 0;
+}
+
+.grapher.grapher.timeChart .textContainer * {
+  position: initial;
+  margin-bottom: 0;
 }

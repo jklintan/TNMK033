@@ -2,9 +2,7 @@
 /** @param {string} jsondata */
 /** @param {string} targetSelector */
 const createGraph = (type, jsondata, targetSelector) => {
-  // console.log(JSON.parse(jsondata))
   const graph = JSON.parse(jsondata)
-  // console.log(graph)
   if (graph.data[0].number) {
     graph.data.forEach(entry => {
           entry.number = parseInt(entry.number)
@@ -27,6 +25,7 @@ const createGraph = (type, jsondata, targetSelector) => {
   if (graphElement) {
     const target = document.querySelector(targetSelector)
     if (target) {
+      graphElement.classList.add('fade-up')
       target.appendChild(graphElement)
     } else {
       console.log('No target html object found')
@@ -232,10 +231,12 @@ const createPieChart = (pieChartData) => {
     total += data.number
   })
   let offset = 0
+  const colors = generateColors(pieChartData.data.length)
+  let i = 0
   pieChartData.data.forEach(data => {
-    const color = randomColor()
-    chart.appendChild(createPie(data, color))
-    list.appendChild(createPieLabel(data, color))
+    chart.appendChild(createPie(data, colors[i]))
+    list.appendChild(createPieLabel(data, colors[i]))
+    i += 1
   })
   parent.appendChild(title)
   parent.appendChild(chart)
@@ -243,59 +244,102 @@ const createPieChart = (pieChartData) => {
   return parent
 }
 
-const randomColor = () => {
-  const sway = 200
-  const seed = Math.floor(Math.random() * sway)
-  const int = (input) => {
-    return input + seed - sway / 2
+const generateColors = (length) => {
+  let colors = []
+  const base = 255 / length
+
+  for (let i = 0; i < length; i++) {
+    const res = Math.round(base * (i + 1))
+    colors[i] = 'rgb(' + res + ', ' + res + ', ' + res + ')'
   }
-  const color = 'rgb(' + int(63) + ', ' + int(136) + ', ' + int(197) + ')'
-  return color
+
+  return colors
 }
 
 /**
- * @param {dataobj[]} pieChartData
+ * @param {dataobj[]} timeData
  * @typedef {Object}  dataobj              - The data object
  * @property {Number}  dataobj.text    - The text describing the part
  * @property {Number}  dataobj.number    - The number to diplay
  */
 const createTimeChart = (timeData) => {
-  let lastY = 0
-
-  const createLine = (x, y, deltaX, deltay, ctx) => {
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(0, 0, 150, 75);
-    console.log('drawn')
+  const getYPos = (number) => {
+    const res = number * (height - 40) / tallest + 20
+    return height - res
   }
+  const hover = (data) => {
+    if (data) {
+      dataTitle.textContent = data.text + ', ' + Math.round(data.number * 100) / 100 + ' ' + timeData.dataType
+    } else {
+      dataTitle.textContent = ''
+    }
+  }
+  const createLine = (x, y, lastX, lastY, graph, lineData) => {
+    const svgNS = 'http://www.w3.org/2000/svg'
 
-  const renderGraph = (parent) => {
-    console.log('rednerd')
-    const tallest = findTallestData(timeData)
-    const windowSize = { w: parent.offsetWidth, h: parent.offsetHeight }
-    let step = windowSize.w / timeData.data.length
-    // console.log(step)
-    let x = 0
-    let y = 0
-    const ctx = canvas.getContext('2d')
-    timeData.data.forEach(lineData => {
-      console.log('looped')
-      const deltaY = lineData.number / tallest
-      createLine(x, y, step, deltaY, ctx)
-      x += step
-      y += deltaY
-      console.log('added')
-      // step += step
+    const rect = document.createElementNS(svgNS, 'rect')
+    rect.classList.add('rect')
+    rect.addEventListener('mouseover', (e) => {
+      hover(lineData)
     })
+    rect.addEventListener('mouseleave', (e) => {
+      hover('')
+    })
+    rect.setAttributeNS(null, 'x', x - step / 2)
+    rect.setAttributeNS(null, 'width', step)
+    rect.setAttributeNS(null, 'height', height)
+    rect.setAttributeNS(null, 'fill', 'rgba(255, 255, 255, 0)')
+    graph.appendChild(rect)
+
+    const circle = document.createElementNS(svgNS, 'circle')
+    circle.classList.add('dot')
+    circle.setAttributeNS(null, 'cx', x)
+    circle.setAttributeNS(null, 'cy', y)
+    circle.setAttributeNS(null, 'r', 4)
+    circle.setAttributeNS(null, 'fill', '#fff')
+    circle.setAttributeNS(null, 'stroke', 'none')
+    graph.appendChild(circle)
+
+    const line = document.createElementNS(svgNS, 'line')
+    line.setAttributeNS(null, 'x1', x)
+    line.setAttributeNS(null, 'y1', y)
+    line.setAttributeNS(null, 'x2', lastX)
+    line.setAttributeNS(null, 'y2', lastY)
+    line.setAttributeNS(null, 'stroke', '#fff')
+    graph.appendChild(line)
   }
+
+  const tallest = findTallestData(timeData)
+  const step = 40
+  const height = 400
   const parent = document.createElement('div')
-  const canvas = document.createElement('canvas')
+  const slider = document.createElement('div')
+  const graph = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+  const textContainer = document.createElement('div')
+  const title = document.createElement('h2')
+  const dataTitle = document.createElement('h3')
   parent.classList.add('grapher', 'timeChart')
-  canvas.classList.add('graph')
-  console.log('added!')
-  window.addEventListener('load', () => renderGraph(parent))
-  window.addEventListener('load', function (event) {
-    console.log('All resources finished loading!')
+  slider.classList.add('slider')
+  graph.classList.add('graph')
+  graph.style.height = height
+  graph.style.minWidth = timeData.data.length * step
+  graph.style.width = timeData.data.length * step
+  textContainer.classList.add('textContainer')
+  title.textContent = timeData.title
+
+  let currentX = step / 2
+  let lastX = step / 2
+  let lastY = getYPos(timeData.data[0].number)
+  timeData.data.forEach(lineData => {
+    createLine(currentX, getYPos(lineData.number), lastX, lastY, graph, lineData)
+    lastX = currentX
+    lastY = getYPos(lineData.number)
+    currentX += step
   })
-  parent.appendChild(canvas)
+  textContainer.appendChild(title)
+  textContainer.appendChild(dataTitle)
+  parent.appendChild(textContainer)
+  slider.appendChild(graph)
+  parent.appendChild(slider)
   return parent
 }

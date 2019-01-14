@@ -31,14 +31,14 @@
         
     //array for storing title and data, for rendering
     $legoData = [];
-    $legoData['title'] = "Antal nya set per år";
+    $legoData['title'] = "Antal nya satser per år";
     $legoData['data'] = $setsByTime;
     $legoData['dataType'] = "sets";
 
     //send to js for rendering
     $setsByTimeString = json_encode($legoData);
     echo "<script>",
-    "createGraph('histogram', '$setsByTimeString', '.banner');",
+    "createGraph('histogram', '$setsByTimeString', '.leftGraphics');",
     "</script>"
     ;
 

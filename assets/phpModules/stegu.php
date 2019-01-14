@@ -44,18 +44,18 @@
 
     // Store the results in an array with objects
     $data = [];
-    $data['title'] = 'Set i Stegus samling';
-    $data['data'][0]['text'] = ' = andelen set som Stegu äger';
+    $data['title'] = 'Stefans samling, set';
+    $data['data'][0]['text'] = ' = Andelen satser som Stefan äger';
     $data['data'][0]['number'] = $steguSets;
-    $data['data'][1]['text'] = ' = andelen set som Stegu saknar';
+    $data['data'][1]['text'] = ' = Andelen satser som Stefan saknar';
     $data['data'][1]['number'] = $numbOfSets[0] - $steguSets;
     $totalsResultString = addslashes(json_encode($data));
 
     $data2 = [];
-    $data2['title'] = 'Bitar i Stegus samling';
-    $data2['data'][0]['text'] = '= andelen bitar som Stegu äger';
+    $data2['title'] = 'Stefans samling, bitar';
+    $data2['data'][0]['text'] = '= Andelen bitar som Stefan äger';
     $data2['data'][0]['number'] = $steguPieces;
-    $data2['data'][1]['text'] = '= andelen bitar som Stegu saknar';
+    $data2['data'][1]['text'] = '= Andelen bitar som Stefan saknar';
     $data2['data'][1]['number'] = $numbOfPieces[0] - $steguPieces;
     $totalsResultString2 = addslashes(json_encode($data2));
 

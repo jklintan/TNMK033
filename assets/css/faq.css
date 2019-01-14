@@ -1,3 +1,7 @@
+body.faq{
+    min-height: 120vh;
+}
+
 .faq .row{
     flex-wrap: wrap;
     align-items: flex-start;

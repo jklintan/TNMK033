@@ -1,5 +1,3 @@
-'use strict'
-
 const scrollDuration = 512
 
 function easeInOutQuad (t) {

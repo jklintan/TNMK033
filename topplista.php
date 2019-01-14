@@ -1,46 +1,27 @@
-   <script type="text/javascript">
-        function validate() {
-            var url = document.getElementById("url").value;
-            var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-            if (pattern.test(url)) {
-                return true;
-            }
-            return false;
-        }
-    </script>
+<!DOCTYPE html>
+<html lang="sv">
 
-    <script type="text/javascript">
-        let t;
-        function reload(){
-            // document.addEventListener('readystatechange', event => {
-            //     if (event.target.readyState === 'interactive') {
-            //         reload();
-            //     }
-            //     else if (event.target.readyState === 'complete') {
-            //         displayPage();
-            //     }
-            // });
-            t = setTimeout(displayPage, 3000);
-            //let now = new Date().getTime();
-            //t = now - performance.timing.navigationStart;
-        }
-        function displayPage(){
-            document.getElementById("loader").style.display = "none";
-            document.getElementById("noshow").style.display = "block";
-        }
-    </script>
+    <head>
+        <!-- Include head -->
+        <?php
+        include 'assets/phpModules/head.php';
+        ?>
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/faq.css" />
+    </head>
 
-<body onload="reload()" class="toplists">
+    <body class="toplist">
+        <!-- Include header menu -->
+        <?php
+            include 'assets/phpModules/header.php';
+        ?>
 
-    <div id="loader"></div>
-
-    <div id="noshow" class="animate-bottom">
         <div class="container">
+
             <h1> Topplista! </h1>
 
             <div class="row">
                 <div class="column">
-                    <div class="columnitem" data-aos="fade-up">
+                    <div class="card">
                         <h3>Lego set med flest bitar! </h3>
                         <?php
                             //The 10 sets with most pieces in total 
@@ -65,14 +46,14 @@
                                     
                                     $filename = "SL/$ItemID.jpg";
                                     print("<p> $name[0] </p> <p> Antal bitar: $pieces </p>");
-                                    print("<td><img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/></td>");
+                                    print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
                                 }
                             }
                             mysqli_close($connection);
                         ?>
                     </div>
 
-                    <div class="columnitem" data-aos="fade-up">
+                    <div class="card">
                         <h3>De 3 största legoseten </h3>
                         <?php
                             //The 10 sets with most pieces in total 
@@ -103,7 +84,7 @@
                         ?>
                     </div>
 
-                    <div class="columnitem" data-aos="fade-up">
+                    <div class="card">
                         <h3>Det äldsta setet </h3>
                         <?php
                             $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -135,7 +116,7 @@
                 </div>
 
                 <div class="column">
-                    <div class="columnitem" data-aos="fade-up">
+                    <div class="card">
                         <h3>Året med flest legoset! </h3>
                         <?php
                             $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -152,15 +133,15 @@
                                 print("<p>Error in reading of data...</p>\n");
                             } else {
                                 while($assoc = mysqli_fetch_array($query)){
-                                    print("<h4> $assoc[0]</h4> <p> Antal satser: $assoc[1] </p>");
+                                    print("<h2> $assoc[0]</h2> <p> Antal satser: $assoc[1] </p>");
                                     $i++;
                                 }
                             }
                         ?>
                     </div>
                     
-                    <div class="columnitem" data-aos="fade-up">
-                        <h3>Fakta från samling: </h3>
+                    <div class="card">
+                        <h3>Fakta från Stefans samling: </h3>
                             <?php
                                 //Summera antalet satser och bitar som Stefan har i sin samling
                                 $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
@@ -191,7 +172,7 @@
                             ?>
                     </div>
                 
-                    <div class="columnitem" data-aos="fade-up">
+                    <div class="card">
                         <h3>Den vanligaste biten </h3>
                             <?php
                                 //The most popular piece
@@ -231,50 +212,8 @@
                             ?>
                     </div>
 
-                    <div class="columnitem" data-aos="fade-up">
-                        <h3>En av de ovanligaste bitarna </h3>
-                            <?php
-                                //The most popular piece
-                                $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
-                                if(mysqli_error($connection)) {
-                                    die("<p>MySQL error:</p>\n<p>" . mysqli_error($connection) . "</p>"); //Error message if connection failed
-                                }
-
-                                $topPiece = "SELECT ItemID, SUM(Quantity) AS pieceSum FROM inventory WHERE ItemtypeID='P' GROUP BY ItemID ORDER BY pieceSum ASC LIMIT 1";
-                                $content = mysqli_query($connection, $topPiece);
-
-                                if(mysqli_num_rows($content) == 0) {
-                                    print("<p>Error in reading of data...</p>\n");
-                                } else {
-                                    while($row = mysqli_fetch_array($content)) {
-                                        $prefix = "http://www.itn.liu.se/~stegu76/img.bricklink.com/";
-                                        $ItemID = $row[0];
-                                        $getSetName = "SELECT parts.Partname, inventory.ColorID FROM parts, inventory WHERE inventory.ItemID=parts.PartID AND inventory.ItemID='$ItemID' AND ItemtypeID='P'";
-                                        $fetch = mysqli_query($connection, $getSetName);
-                                        $name = mysqli_fetch_array($fetch);
-                                        $partname = $name[0];
-                                        $ColorID = $name[1];
-                                        $imagesearch = mysqli_query($connection, "SELECT * FROM images WHERE ItemTypeID='P' AND ItemID='$ItemID' AND ColorID=$ColorID");
-                                        $imageinfo = mysqli_fetch_array($imagesearch);
-                                        if($imageinfo['has_jpg']) { // Use JPG if it exists
-                                            $filename = "P/$ColorID/$ItemID.jpg";
-                                        } else if($imageinfo['has_gif']) { // Use GIF if JPG is unavailable
-                                            $filename = "P/$ColorID/$ItemID.gif";
-                                        } else { // If neither format is available, insert a placeholder image
-                                            $filename = "noimage_small.png";
-                                        }
-                                        print(" <b> $partname </b> Antal: $row[1]");
-                                        print("<img title='$prefix$filename' src=\"$prefix$filename\" alt=\"Part $ItemID\"/>");
-                                    }
-                                }
-                                mysqli_close($connection);
-                            ?>
-
-                            <button type="button" href="http://www.student.itn.liu.se/~joskl841/project/topplista.php">Generera ny ovanlig bit!</button>
-
-                    </div>
-
-                    <div class="columnitem" data-aos="fade-up">
+                    
+                    <div class="card">
                         <h3>Det nyaste setet </h3>
                         <?php
                             $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
@@ -305,10 +244,6 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        AOS.init();
-    </script>
     </body>
 </html>

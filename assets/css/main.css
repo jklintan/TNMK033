@@ -1,24 +1,34 @@
-body{
-    display: flex;
-    flex-direction: column;
-    font-family: 'Montserrat', sans-serif;
-    overflow-x: hidden;
-    align-items: center;
+body.main{
+    background: #fff;
+    margin-bottom: 150px;
 }
 
 .start {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     min-height: 100vh;
     width: 100vw;
+    background-image: url(../img/background.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.start p{
+    color: #fff;
+    font-weight: bold;
+    margin: 0;
+    font-size: 12px;
+    text-align: justify;
 }
 
 .start .centerBox {
+    background-color: rgba(255, 255, 255, 0);
     flex-direction: column;
     align-items: center;
-    max-width: 700px;
-    margin: 0 30px;
+    margin: 10px 30px;
+    padding: 70px 0;
+    border: 8px solid #fff;
 }
 
 .start .centerBox * {
@@ -26,48 +36,83 @@ body{
 }
 
 .start .centerBox img {
-    width: 200px;
+    width: 300px;
 }
 
 .start .centerBox input {
     text-align: left;
     margin-right: 4px;
+    background-color: #fff;
 }
 
 .start .centerBox #scrollDownArrow {
     font-size: 32px;
     margin-top: 50px;
-    color: rgb(97,157,207);
+    color: rgb(255,255,255);
     animation: bounce 2s infinite;
 }
 
 .stats {
-    flex-wrap: wrap;
+    flex-direction:  column;
     width: 100vw;
-    justify-content: center;
-    max-width: 960px;
+    max-width: 1200px;
+    margin-top: 0;
 }
 
-.banner{
-    width: 100%;
+.stats h1{
+    color: #343434;
+    font-size: 40px;
 }
+
+.stats .row {
+    flex-direction: row;
+}
+
+.leftGraphics {
+    flex-direction: column;
+    width: calc(100% - 300px);
+}
+
+.leftGraphics .grapher {
+    width: calc(100% - 40px);
+}
+
 .rightGraphics{
     flex-direction: column;
     width: 300px;
 }
-.leftGraphics{
-    max-height: 600px;
-    flex: 1;
+
+.rowBanner {
+    flex-direction: column;
+    width: 60vw;
+    background-color: #fff;
+    padding: 100px 30px 100px 30px;
+    align-items: center;
+    border: 8px solid #343434;
+    margin-bottom: 50px;
+    margin-top: 100px;
 }
-.leftGraphics * {
-    flex: 1;
+
+.rowBanner p, .rowBanner h1{
+    color: #343434;
+    margin: 30px 100px;
+    text-align: center;
+    width: 60vw;
 }
+
+.rowBanner p{
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 #searchField {
     margin: 10px 0;
 }
 
 #searchField * {
     border-radius: 3px;
+    max-width: 300px;
+    width: 90%;
 }
 
 #searchField button {
@@ -80,7 +125,12 @@ body{
     cursor: pointer;
 }
 #searchField button:hover{
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(200, 200, 200, 0.6);
+}
+
+#bannerLogo{
+    width: 130px;
+    margin: 6px 0;
 }
 
 @keyframes bounce {
