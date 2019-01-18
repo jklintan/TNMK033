@@ -2,6 +2,7 @@
 <html lang="sv">
 
     <head>
+        <title>Topplista</title>
         <!-- Include head -->
         <?php
         include 'assets/phpModules/head.php';
@@ -22,7 +23,7 @@
             <div class="row">
                 <div class="column">
                     <div class="card">
-                        <h3>Lego set med flest bitar! </h3>
+                        <h3>Lego set med flest bitar </h3>
                         <?php
                             //The 10 sets with most pieces in total 
                             $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database
@@ -117,7 +118,7 @@
 
                 <div class="column">
                     <div class="card">
-                        <h3>Året med flest legoset! </h3>
+                        <h3>Året med flest legoset </h3>
                         <?php
                             $connection	=	mysqli_connect("mysql.itn.liu.se","lego", "", "lego"); //connect to lego db
 
@@ -173,7 +174,7 @@
                     </div>
                 
                     <div class="card">
-                        <h3>Den vanligaste biten </h3>
+                        <h3>Den mest förekommande biten</h3>
                             <?php
                                 //The most popular piece
                                 $connection = mysqli_connect("mysql.itn.liu.se","lego","","lego"); //Connect to Lego database

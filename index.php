@@ -2,6 +2,7 @@
 <html lang="sv">
 
     <head>
+        <title>Statistik om LEGO</title>
         <!-- Include head -->
         <?php
             include 'assets/phpModules/head.php';
@@ -16,16 +17,16 @@
             include 'assets/phpModules/header.php';
         ?>
             <div class="centerBox">
-                <h1>STATISTIK OM LEGODATABASEN</h1>
+                <h1>Statistik över legoset och legobitar</h1>
                 <p>Här kan du söka på en legosats som du vill veta mer om...</p>
                 <div id="searchField">
                         <form action="search.php" method="GET">
                             <input required type="text" name="query" placeholder="Tanker Wagon..." autofocus>
-                            <button type="submit"><i class="fas fa-search"></i></button>
+                            <button type="submit"><img src="./assets/img/search.svg" alt="Search Button"/></button>
                         </form>
                 </div>
                 <a href="#how" class="transparent smooth-scroll">
-                    <i id="scrollDownArrow" class="fas fa-chevron-down"></i>
+                    <img src="./assets/img/arrow.svg" alt="Scroll Down Arrow" id="scrollDownArrow"/>
                 </a>
             </div>
         </div>
@@ -47,7 +48,7 @@
             </div>
         </div>
         <?php
-            include 'assets/phpModules/tidSets.php';
+            include 'assets/phpModules/barChart.php';
             include 'assets/phpModules/timeChart.php';
             include 'assets/phpModules/totalParts.php';
             include 'assets/phpModules/stegu.php';

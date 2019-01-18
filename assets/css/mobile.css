@@ -15,7 +15,7 @@
   }
 
 
-  .rowBanner {
+  .rowBanner h1, .rowBanner {
     border: 0px;
     margin: 0;
   }

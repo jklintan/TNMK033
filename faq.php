@@ -2,6 +2,7 @@
 <html lang="sv">
 
     <head>
+        <title>Om hemsidan</title>
         <!-- Include head -->
         <?php
         include 'assets/phpModules/head.php';
@@ -24,7 +25,7 @@
 
                     <div class="card">
                         <h2>Om denna sida</h2>
-                        <p>Denna sida är en plats för statistik om de legoset som Lego har gett ut. Här hittar du som är
+                        <p>Denna sida är en plats för statistik om de legoset som Lego har gett ut. Här kan du som är
                             intresserade av vad Lego gjort genom åren hitta information. Även om du är säljare som vill hålla koll på vilka bitar som är
                             lätta och svåra att få tag på så är detta sidan för dig. 
                         </p>
@@ -50,13 +51,13 @@
 
                     <div class="card">
                         <h2>Vilka är vi?</h2>
-                        <p>Denna hemsida är skapad hösten 2018 av Jakob Unnebäck, Ellinor Zetterman, Alex Knutsson & Josefine Klintberg. 
+                        <p>Denna hemsida är skapad hösten 2018 av Jakob Unnebäck, Ellinor Zetterman, Alex Knutsson och Josefine Klintberg. 
                         Vi är 4 studenter som läser på Civilingenjörsprogrammet i Medieteknik på Linköpings Universitet, Campus Norrköping. </p>
                     </div>
 
                     <div class="card">
                         <h2>Om statistiken</h2>
-                        <p>All statistik är hämtat från den Legodatabasen som byggts upp av Stefan Gustavsson på Linköpings Universitet. 
+                        <p>All statistik är hämtat från den Legodatabasen som byggts upp av Stefan Gustavson på Linköpings Universitet. 
                             Databasen innehåller en katalog över Legobitar och Legosatser samt en tabell för bilder. Notera att
                             databasen inte innehåller alla set som finns. Alla bilder är hämtade via Bricklink. 
                         </p>

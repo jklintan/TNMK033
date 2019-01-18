@@ -52,7 +52,7 @@
     $data['data'][2]['text'] = 'unika bitar';
     $data['data'][2]['number'] = $uNumbOfPieces[0];
     $data['data'][2]['img'] = './assets/img/legoSmallUnique.svg'[0];
-    $data['data'][3]['text'] = 'unika set';
+    $data['data'][3]['text'] = 'unika satser';
     $data['data'][3]['number'] = $uNumbOfSets[0];
     $totalsResultString = addslashes(json_encode($data));
 

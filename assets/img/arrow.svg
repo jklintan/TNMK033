@@ -2,11 +2,6 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 1280 1280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
     <g>
-        <g transform="matrix(1,0,0,1,-156.371,-156.371)">
-            <circle cx="640" cy="640" r="327.258" style="fill:none;stroke:white;stroke-width:170px;"/>
-        </g>
-        <g transform="matrix(1,0,0,1,-156.371,-156.371)">
-            <path d="M1280,1280L871.361,871.361" style="fill:none;stroke:white;stroke-width:170px;"/>
-        </g>
+        <path d="M1092.55,413.726L640,866.274L187.452,413.726" style="fill:none;stroke:white;stroke-width:170px;"/>
     </g>
 </svg>

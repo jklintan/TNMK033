@@ -1,14 +1,29 @@
+/**
+ * @typedef {Object} GraphObject - Object sent from PHP
+ * @property {String} title - Title for graph
+ * @property {String} dataType - Data definition
+ * @property {GraphEntry[]} data - Data object
+ */
+
+ /**
+ * @typedef {Object} GraphEntry
+ * @property {String} text - Data text
+ * @property {Number} number - Data number
+ */
+
 /** @param {string} type */
 /** @param {string} jsondata */
 /** @param {string} targetSelector */
 const createGraph = (type, jsondata, targetSelector) => {
-  const graph = JSON.parse(jsondata)
+  const graph = /** @type GraphObject */ (JSON.parse(jsondata))
   if (graph.data[0].number) {
     graph.data.forEach(entry => {
-          entry.number = parseInt(entry.number)
+          entry.number = parseInt(entry.number) // Convert data to numbers
       })
   }
   let graphElement
+
+  // Create appropriate graph
   if (type === 'numberSlider') {
     graphElement = createNumberSlider(graph)
   }
@@ -22,6 +37,7 @@ const createGraph = (type, jsondata, targetSelector) => {
     graphElement = createTimeChart(graph)
   }
 
+  // Add graph to DOM
   if (graphElement) {
     const target = document.querySelector(targetSelector)
     if (target) {
@@ -35,6 +51,8 @@ const createGraph = (type, jsondata, targetSelector) => {
   }
 }
 
+// Generate data for testing purposes
+/** @param {number} amount */
 const generateTestData = (amount) => {
   let testData = []
   for (let i = 0; i < amount; i++) {
@@ -45,13 +63,17 @@ const generateTestData = (amount) => {
   return result
 }
 
+// Generate charts for testing purposes
 const init = () => {
   document.querySelector('body').appendChild(createPieChart(generateTestData(4)))
   document.querySelector('body').appendChild(createTimeChart(generateTestData(2)))
 }
 
-/** @param {Number} goTo */
-/** @param {HTMLDivElement} element */
+// Slide slider element to
+/**
+ * @param {Number} goTo - Slide number to go to
+ * @param {HTMLDivElement} element - Graph element
+ */
 const numberSliderClick = (element, goTo) => {
   const slider = element.querySelector('div')
   const children = [].slice.call(element.children)
@@ -62,12 +84,9 @@ const numberSliderClick = (element, goTo) => {
   }
 }
 
+// Create a data slider chart
 /**
- * @param {dataobj[]} sliderData
- * @typedef {Object}  dataobj             - The data object
- * @property {Number}  dataobj.title       - The title
- * @property {String}  dataobj.text         - The text describing the data
- * @property {Number}  dataobj.number      - The number to diplay
+ * @param {GraphObject} sliderData
  */
 const createNumberSlider = (sliderData) => {
   const parent = document.createElement('div')
@@ -80,7 +99,7 @@ const createNumberSlider = (sliderData) => {
   header.textContent = sliderData.title
   slider.style.width = sliderData.data.length * 100 + '%'
   slider.classList.add('slider')
-  slider.dataset.slider = 0 // The data to show
+  slider.dataset.slider = 0 // The current index to show
   sliderData.data.forEach(object => {
     const entry = document.createElement('div')
     const p = document.createElement('p')
@@ -103,10 +122,14 @@ const createNumberSlider = (sliderData) => {
   return parent
 }
 
-const findTallestData = (histogramData) => {
-  if (histogramData.data[0].number) {
-    let tallest = histogramData.data[0].number
-    histogramData.data.forEach(data => {
+// Find the largest number to determine chart scale
+/**
+ * @param {GraphObject} graphData
+ */
+const findTallestData = (graphData) => {
+  if (graphData.data[0].number) {
+    let tallest = graphData.data[0].number
+    graphData.data.forEach(data => {
       tallest = data.number > tallest ? data.number : tallest
     })
     return tallest
@@ -115,11 +138,11 @@ const findTallestData = (histogramData) => {
   return false
 }
 
+// Create a bar chart bar
 /**
- * @param {dataobj[]} barData
- * @typedef {Object}  dataobj              - The data object
- * @property {Number}  dataobj.text    - The text describing the part
- * @property {Number}  dataobj.number    - The number to diplay
+ * @param {GraphEntry} barData
+ * @param {String} dataType
+ * @param {Number} tallest
  */
 const createBar = (barData, dataType, tallest) => {
   const bar = document.createElement('div')
@@ -148,11 +171,9 @@ const createBar = (barData, dataType, tallest) => {
   return bar
 }
 
+// Create a data histogram chart
 /**
- * @param {dataobj[]} histogramData
- * @typedef {Object}  dataobj              - The data object
- * @property {Number}  dataobj.text    - The text describing the part
- * @property {Number}  dataobj.number    - The number to diplay
+ * @param {GraphObject} histogramData
  */
 const createHistogram = (histogramData) => {
   const tallest = findTallestData(histogramData)
@@ -180,11 +201,9 @@ const createHistogram = (histogramData) => {
   return parent
 }
 
+// Create a pie chart
 /**
- * @param {dataobj[]} pieChartData
- * @typedef {Object}  dataobj              - The data object
- * @property {Number}  dataobj.text    - The text describing the part
- * @property {Number}  dataobj.number    - The number to diplay
+ * @param {GraphObject} pieChartData
  */
 const createPieChart = (pieChartData) => {
   const createPie = (data, color) => {
@@ -206,6 +225,7 @@ const createPieChart = (pieChartData) => {
     return slot
   }
 
+  // Create a label for pie chart slice
   const createPieLabel = (data, color) => {
     const label = document.createElement('div')
     const dot = document.createElement('div')
@@ -244,6 +264,10 @@ const createPieChart = (pieChartData) => {
   return parent
 }
 
+// Generate colors
+/**
+ * @param {Number} length - How many colors
+ */
 const generateColors = (length) => {
   let colors = []
   const base = 255 / length
@@ -256,11 +280,9 @@ const generateColors = (length) => {
   return colors
 }
 
+// Create a line chart
 /**
- * @param {dataobj[]} timeData
- * @typedef {Object}  dataobj              - The data object
- * @property {Number}  dataobj.text    - The text describing the part
- * @property {Number}  dataobj.number    - The number to diplay
+ * @param {GraphObject} timeData
  */
 const createTimeChart = (timeData) => {
   const getYPos = (number) => {
@@ -342,4 +364,36 @@ const createTimeChart = (timeData) => {
   slider.appendChild(graph)
   parent.appendChild(slider)
   return parent
+}
+
+// Show info box for set
+/**
+ * @param {String} clicked_id
+ */
+function showModal(clicked_id) {
+  className = '.a' + clicked_id
+  modal = document.querySelector(className)
+  modal.style.display = 'flex'
+  document.querySelector('#results').style.filter = 'blur(13px)'
+  document.querySelector('body > header').style.filter = 'blur(13px)'
+  document.querySelector('body > form').style.filter = 'blur(13px)'
+  document.querySelector('body > h1').style.filter = 'blur(13px)'
+
+    window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none'
+        document.querySelector("#results").style.filter = 'blur(0px)'
+        document.querySelector("body > header").style.filter = 'blur(0px)'
+        document.querySelector("body > form").style.filter = 'blur(0px)'
+        document.querySelector("body > h1").style.filter = 'blur(0px)'
+    }
+  }
+}
+
+function closeModal () {
+  modal.style.display = 'none'
+  document.querySelector('#results').style.filter = 'blur(0px)'
+  document.querySelector('body > header').style.filter = 'blur(0px)'
+  document.querySelector('body > form').style.filter = 'blur(0px)'
+  document.querySelector('body > h1').style.filter = 'blur(0px)'
 }

@@ -7,6 +7,7 @@ body.main{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
     width: 100vw;
     background-image: url(../img/background.jpg);
@@ -27,8 +28,7 @@ body.main{
     flex-direction: column;
     align-items: center;
     margin: 10px 30px;
-    padding: 70px 0;
-    border: 8px solid #fff;
+    padding: 50px 0;
 }
 
 .start .centerBox * {
@@ -36,7 +36,11 @@ body.main{
 }
 
 .start .centerBox img {
-    width: 300px;
+    width: 20px;
+}
+
+.start .centerBox h1{
+    text-transform: uppercase;
 }
 
 .start .centerBox input {
@@ -84,20 +88,16 @@ body.main{
 
 .rowBanner {
     flex-direction: column;
-    width: 60vw;
     background-color: #fff;
     padding: 100px 30px 100px 30px;
     align-items: center;
     border: 8px solid #343434;
-    margin-bottom: 50px;
-    margin-top: 100px;
+    margin: 10vw 20vw 50px;
 }
 
 .rowBanner p, .rowBanner h1{
     color: #343434;
-    margin: 30px 100px;
     text-align: center;
-    width: 60vw;
 }
 
 .rowBanner p{
@@ -112,7 +112,6 @@ body.main{
 #searchField * {
     border-radius: 3px;
     max-width: 300px;
-    width: 90%;
 }
 
 #searchField button {
@@ -120,7 +119,6 @@ body.main{
     color: #fff;
     justify-content: center;
     align-items: center;
-    width: 33px;
     transition: 200ms;
     cursor: pointer;
 }

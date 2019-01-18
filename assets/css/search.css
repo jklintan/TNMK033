@@ -28,14 +28,10 @@ body > header, body > form, body > h1{
     transition: .2s;
 }
 
-a:hover{
-    background-color: rgba(0, 0, 0, 0) !important;
-}
-
-a h2:hover{
+/* a h2:hover{
     transition: all ease-out .2s;
     color: #343434;
-}
+} */
 
 .searchCard h2{
     margin-bottom: 8px;

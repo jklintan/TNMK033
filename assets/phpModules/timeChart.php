@@ -34,10 +34,9 @@
 
     //array for storing title and data, for rendering
     $legoData = [];
-    $legoData['title'] = "Antal satser mellan 1949 och 2018";
+    $legoData['title'] = "Antal satser mellan år 1949 och 2018";
     $legoData['data'] = $setsByTime;
-    $legoData['dataType1'] = "År";
-    $legoData['dataType'] = "Set";
+    $legoData['dataType'] = "Satser";
 
     //send to js for rendering
     $setsChange = json_encode($legoData);
